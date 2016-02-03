@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,11 +19,9 @@ public class StackMenuAdapter extends ArrayAdapter<Stack> {
 
     public void setData(List<Stack> stacks) {
         clear();
-        /*
-        for(Event e : stacks) {
+        for(Stack e : stacks) {
             add(e);
         }
-        */
         notifyDataSetChanged();
     }
 
@@ -35,6 +32,9 @@ public class StackMenuAdapter extends ArrayAdapter<Stack> {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_stack, null);
         }
+        Stack stack = getItem(position);
+        TextView stackName = (TextView) convertView.findViewById(R.id.stack_name);
+        stackName.setText(stack.getStackName());
         return convertView;
     }
 }

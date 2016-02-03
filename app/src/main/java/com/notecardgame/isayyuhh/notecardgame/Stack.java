@@ -17,8 +17,17 @@ public class Stack {
         this.name = name;
     }
 
+    public Stack () {
+
+    }
+
     /** Adds Notecard to the List */
     public void addNotecard (Notecard newNotecard) {
         stack.add(newNotecard);
+    }
+
+    /** Gets Stack name */
+    public String getStackName () {
+        return this.name;
     }
 }

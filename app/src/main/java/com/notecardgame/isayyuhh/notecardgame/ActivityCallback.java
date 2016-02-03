@@ -1,5 +1,6 @@
 package com.notecardgame.isayyuhh.notecardgame;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 
 /**
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 public interface ActivityCallback {
     /** FragmentManager functions*/
     void setFragment(Fragment newFragment);
+    void setDialogFragment(DialogFragment newFragment);
     void setToolbarTitle(String title);
 }
 

@@ -1,6 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -51,6 +52,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         ft.replace(R.id.listFragment, newFragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void setDialogFragment(DialogFragment newFragment) {
+        FragmentTransaction ft = this.fm.beginTransaction();
+        Fragment prev = this.fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        newFragment.show(ft, "dialog");
     }
 
     /** Changes current Toolbar title */

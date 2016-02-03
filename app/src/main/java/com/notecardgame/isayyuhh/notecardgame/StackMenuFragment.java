@@ -6,32 +6,46 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/2/16.
  */
 public class StackMenuFragment extends Fragment {
 
-    /** Fields */
+    /**
+     * Fields
+     */
+    public final static String FILENAME = "hello_file";
+
     private ActivityCallback mCallback;
     private Snackbar sb;
 
-    /** OnAttach */
+    /**
+     * OnAttach
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.mCallback = (ActivityCallback) activity;
     }
 
-    /** OnCreateView */
+    /**
+     * OnCreateView
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,47 +59,74 @@ public class StackMenuFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String FILENAME = "hello_file";
                 String string = "hello world!";
+
+                AddStackDialogFragment newFragment = new AddStackDialogFragment();
+                mCallback.setDialogFragment(newFragment);
 
                 try {
                     FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
                     fos.write(string.getBytes());
                     fos.close();
+                } catch (IOException ioe) {
+                    Log.e("FAIL", "File output failed");
+                    return;
                 }
-                catch (IOException ioe) {
-                    sb = Snackbar.make(view, "Failed to create Notecard", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null);
-                    sb.show();
-                }
-                
-                if (sb != null) {
-                    sb.dismiss();
-                }
-                else {
-                    Snackbar.make(view, "Notecard created", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+
+
+                Snackbar.make(view, "Notecard created", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
         return view;
     }
 
-    /** Attaches Adapter and OnItemClickListener to the ListView */
+    /**
+     * Attaches Adapter and OnItemClickListener to the ListView
+     */
     private void setListView(View view) {
+        StringBuilder fileInput = new StringBuilder();
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            for (int i = fis.read(); i != -1; i = fis.read()) {
+                fileInput.append((char) i);
+            }
+            fis.close();
+        } catch (IOException ioe) {
+            Log.e("FAIL", "File input failed");
+            return;
+        }
+        String stackName = fileInput.toString();
+
+        Stack newStack = new Stack(stackName);
+        List<Stack> stacks = new ArrayList<>();
+        stacks.add(newStack);
+
         ListView listView = (ListView) view.findViewById(R.id.menu_list);
+        StackMenuAdapter adp = new StackMenuAdapter(getActivity());
+        listView.setAdapter(adp);
+        adp.setData(stacks);
         MenuListListener listListener = new MenuListListener();
         listView.setOnItemClickListener(listListener);
     }
 
-    /** OnItemClickListener */
+    /**
+     * OnItemClickListener
+     */
     private class MenuListListener implements AdapterView.OnItemClickListener {
 
-        /** Fields */
-        public MenuListListener() {}
+        /**
+         * Fields
+         */
+        public MenuListListener() {
+        }
 
-        /** OnItemClick */
+        /**
+         * OnItemClick
+         */
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.e("STRING", ((TextView) view.findViewById(R.id.stack_name)).getText().toString());
+        }
     }
 }
