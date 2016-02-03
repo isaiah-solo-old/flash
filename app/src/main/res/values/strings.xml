@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">NotecardGame</string>
     <string name="action_settings">Settings</string>
+    <string-array name="main_menu">
+        <item>Your Notecards</item>
+        <item>Quiz!</item>
+    </string-array>
 </resources>

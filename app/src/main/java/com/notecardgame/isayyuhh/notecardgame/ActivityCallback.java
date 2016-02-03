@@ -8,5 +8,6 @@ import android.support.v4.app.Fragment;
 public interface ActivityCallback {
     /** FragmentManager functions*/
     void setFragment(Fragment newFragment);
+    void setToolbarTitle(String title);
 }
 
