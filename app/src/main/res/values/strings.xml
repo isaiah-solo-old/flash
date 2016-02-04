@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NotecardGame</string>
     <string name="action_settings">Settings</string>
+    <string name="add_stack">Enter a new Stack name:</string>
     <string-array name="main_menu">
         <item>Your Notecards</item>
         <item>Quiz!</item>

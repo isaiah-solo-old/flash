@@ -2,6 +2,7 @@ package com.notecardgame.isayyuhh.notecardgame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,9 @@ import java.util.List;
  * Created by isayyuhh on 2/2/16.
  */
 public class StackMenuFragment extends Fragment {
+    private final static int MY_REQUEST_CODE = 1;
+    private StackMenuFragment smf = this;
+    private View view;
 
     /**
      * Fields
@@ -50,7 +54,7 @@ public class StackMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
-        View view = inflater.inflate(R.layout.stack_menu, container, false);
+        this.view = inflater.inflate(R.layout.stack_menu, container, false);
         this.mCallback.setToolbarTitle("Stacks");
         setListView(view);
 
@@ -59,26 +63,18 @@ public class StackMenuFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String string = "hello world!";
-
+                // Starts Dialog
                 AddStackDialogFragment newFragment = new AddStackDialogFragment();
+                newFragment.setTargetFragment(smf, MY_REQUEST_CODE);
                 mCallback.setDialogFragment(newFragment);
-
-                try {
-                    FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-                    fos.write(string.getBytes());
-                    fos.close();
-                } catch (IOException ioe) {
-                    Log.e("FAIL", "File output failed");
-                    return;
-                }
-
-
-                Snackbar.make(view, "Notecard created", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
-        return view;
+        return this.view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        setListView(this.view);
     }
 
     /**

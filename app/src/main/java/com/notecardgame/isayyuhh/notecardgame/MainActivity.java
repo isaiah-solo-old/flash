@@ -10,15 +10,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 /**
- * Created by isaiah on 6/27/2015.
+ * Created by isayyuhh on 2/3/16.
  */
 public class MainActivity extends AppCompatActivity implements ActivityCallback {
 
-    /** Fields */
+    /**
+     * Fields
+     */
     private FragmentManager fm;
     private Toolbar mToolbar;
 
-    /** OnCreate */
+    /**
+     * OnCreate
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         initialize();
     }
 
-    /** Initializes app */
+    /**
+     * Initializes app
+     */
     private void initialize() {
         // Sets Toolbar and title
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         ft.commit();
     }
 
-    /** Sets up the current Fragment */
+    /**
+     * Sets up new Fragment
+     */
     @Override
     public void setFragment(Fragment newFragment) {
         // Starts FragmentTransaction
@@ -54,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         ft.commit();
     }
 
+    /**
+     * Sets up new DialogFragment
+     */
     @Override
     public void setDialogFragment(DialogFragment newFragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
@@ -67,7 +78,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         newFragment.show(ft, "dialog");
     }
 
-    /** Changes current Toolbar title */
+    /**
+     * Changes current Toolbar title
+     */
     @Override
     public void setToolbarTitle(String title) {
         mToolbar.setTitle(title);
