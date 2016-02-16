@@ -1,6 +1,5 @@
 package com.notecardgame.isayyuhh.notecardgame.logic;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
