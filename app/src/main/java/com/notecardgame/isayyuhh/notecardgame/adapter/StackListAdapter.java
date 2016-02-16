@@ -29,8 +29,8 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
 
     public void setData(List<Stack> stacks) {
         this.clear();
-        for(Stack e : stacks) {
-            this.add(e);
+        for(Stack stack : stacks) {
+            this.add(stack);
         }
         this.notifyDataSetChanged();
     }

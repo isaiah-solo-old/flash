@@ -27,8 +27,10 @@ public interface ActivityCallback {
     Stack findStack (String name);
     Stack stacksAt (int position);
     List<Stack> getStacks ();
+    void update ();
 
     /** Notecard functions */
     void addNotecardToStack (Notecard notecard, String name);
+    void removeNotecardFromStack (Notecard notecard, String name);
 }
 

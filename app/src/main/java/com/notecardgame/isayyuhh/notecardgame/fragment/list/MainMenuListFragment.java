@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment;
+package com.notecardgame.isayyuhh.notecardgame.fragment.list;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -33,7 +33,7 @@ public class MainMenuListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
-        View view = inflater.inflate(R.layout.main_menu, container, false);
+        View view = inflater.inflate(R.layout.list_main, container, false);
         this.mCallback.setToolbarTitle(this.mCallback.getStr(R.string.app_name));
         setListView(view);
         return view;

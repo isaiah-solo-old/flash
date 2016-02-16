@@ -19,7 +19,7 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 public class NotecardListAdapter extends ArrayAdapter<Notecard> {
     private SparseBooleanArray mSelectedItemsIds;
     private ActivityCallback mCallback;
-    private Stack stack;
+    private String stackName;
 
     public NotecardListAdapter(Context context, ActivityCallback mCallback) {
         super(context, R.layout.item_stack);
@@ -29,9 +29,10 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
 
     public void setData(Stack stack) {
         this.clear();
-        for(int i = 0; i < stack.size(); i++) {
-            this.add(stack.at(i));
+        for(Notecard notecard: stack.getNotecards()) {
+            this.add(notecard);
         }
+        this.stackName = stack.getName();
         this.notifyDataSetChanged();
     }
 
@@ -44,14 +45,16 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
         }
         Notecard notecard = this.getItem(position);
         TextView notecardFront = (TextView) convertView.findViewById(R.id.notecard_front);
+        TextView notecardBack = (TextView) convertView.findViewById(R.id.notecard_back);
         notecardFront.setText(notecard.getFront());
+        notecardBack.setText(notecard.getBack());
         return convertView;
     }
 
     @Override
-    public void remove(Notecard object) {
-        super.remove(object);
-        this.stack.removeNotecard(object);
+    public void remove(Notecard notecard) {
+        super.remove(notecard);
+        this.mCallback.removeNotecardFromStack(notecard, this.stackName);
         this.notifyDataSetChanged();
     }
 

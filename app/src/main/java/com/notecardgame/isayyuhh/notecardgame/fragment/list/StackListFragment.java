@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment;
+package com.notecardgame.isayyuhh.notecardgame.fragment.list;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +13,9 @@ import android.widget.ListView;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddStackDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
-import com.notecardgame.isayyuhh.notecardgame.listener.MultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.listener.StackMultiChoiceListener;
 import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
 
 /**
@@ -46,12 +47,12 @@ public class StackListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
-        this.currentView = inflater.inflate(R.layout.stack_menu, container, false);
+        this.currentView = inflater.inflate(R.layout.list_stack, container, false);
         this.mCallback.setToolbarTitle("Stacks");
         setListView(currentView);
 
         // FloatingActionButton
-        FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(R.id.fab_stack);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +74,7 @@ public class StackListFragment extends Fragment {
      * Attaches Adapter and OnItemClickListener to the ListView
      */
     private void setListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.menu_list);
+        ListView listView = (ListView) view.findViewById(R.id.lv_stack);
         StackListAdapter adp = new StackListAdapter(getActivity(), mCallback);
         listView.setAdapter(adp);
         adp.setData(this.mCallback.getStacks());
@@ -81,7 +82,7 @@ public class StackListFragment extends Fragment {
         listView.setOnItemClickListener(new ItemClickListener(mCallback,
                 new StackListLogic(mCallback)));
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new MultiChoiceListener(listView, adp));
+        listView.setMultiChoiceModeListener(new StackMultiChoiceListener(listView, adp));
         listView.setItemsCanFocus(false);
     }
 }

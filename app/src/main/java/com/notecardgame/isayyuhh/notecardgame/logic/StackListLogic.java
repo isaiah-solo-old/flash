@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
-import com.notecardgame.isayyuhh.notecardgame.fragment.NotecardListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.list.NotecardListFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**

@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment;
+package com.notecardgame.isayyuhh.notecardgame.fragment.list;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddNotecardDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
-import com.notecardgame.isayyuhh.notecardgame.listener.MultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.listener.StackMultiChoiceListener;
 import com.notecardgame.isayyuhh.notecardgame.logic.NotecardListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
@@ -60,12 +62,13 @@ public class NotecardListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
-        this.currentView = inflater.inflate(R.layout.stack_menu, container, false);
+        this.currentView = inflater.inflate(R.layout.list_notecard, container, false);
         this.mCallback.setToolbarTitle("Notecards");
         setListView(currentView);
 
         // FloatingActionButton
-        FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(
+                R.id.fab_notecard);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +97,7 @@ public class NotecardListFragment extends Fragment {
     private void setListView(View view) {
         this.stack = this.mCallback.findStack(this.stack.getName());
 
-        ListView listView = (ListView) view.findViewById(R.id.menu_list);
+        ListView listView = (ListView) view.findViewById(R.id.lv_notecard);
         NotecardListAdapter adp = new NotecardListAdapter(getActivity(), this.mCallback);
         listView.setAdapter(adp);
         adp.setData(this.stack);
@@ -102,7 +105,7 @@ public class NotecardListFragment extends Fragment {
         listView.setOnItemClickListener(new ItemClickListener(this.mCallback,
                 new NotecardListLogic(this.mCallback)));
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new MultiChoiceListener(listView, adp));
+        listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(listView, adp));
         listView.setItemsCanFocus(false);
     }
 }

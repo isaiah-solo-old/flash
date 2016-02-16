@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.notecardgame.isayyuhh.notecardgame.fragment.MainMenuListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.list.MainMenuListFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.R;
@@ -185,8 +185,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         //Stack newStack = new Stack(text);
         this.stacks.add(stack);
 
-        this.updateFile();
-        this.updateStacks();
+        this.update();
     }
 
     /**
@@ -195,15 +194,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      */
     @Override
     public void deleteStack(String name) {
-        for (Stack stack : this.stacks) {
-            if (stack.getName().equals(name)) {
-                this.stacks.remove(stack);
-                this.updateFile();
-                this.updateStacks();
-                return;
-            }
-        }
-        Log.e("FAIL", "Item does not exist in List");
+        Stack stack = this.findStack(name);
+        if (stack != null) this.stacks.remove(stack);
+
+        this.update();
     }
 
     /**
@@ -241,6 +235,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     }
 
     /**
+     * Updates internal storage file and reference to stacks
+     */
+    @Override
+    public void update() {
+        this.updateFile();
+        this.updateStacks();
+    }
+
+    /**
      * Adds notecard to given stack
      * @param notecard Notecard to add to stack
      * @param name Name of stack to add to
@@ -250,7 +253,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         Stack stack = this.findStack(name);
         stack.addNotecard(notecard);
 
-        this.updateFile();
-        this.updateStacks();
+        this.update();
+    }
+
+    /**
+     * Deletes notecard from given stack
+     * @param notecard Notecard to delete from stack
+     * @param name Name of stack to delete from
+     */
+    @Override
+    public void removeNotecardFromStack(Notecard notecard, String name) {
+        Stack stack = this.findStack(name);
+        stack.removeNotecard(notecard);
+
+        this.update();
     }
 }

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
-import com.notecardgame.isayyuhh.notecardgame.fragment.StackListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.list.StackListFragment;
 
 /**
  * Created by isayyuhh on 2/15/16.

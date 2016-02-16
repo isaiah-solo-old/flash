@@ -1,8 +1,12 @@
 package com.notecardgame.isayyuhh.notecardgame.object;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -10,46 +14,74 @@ import java.util.List;
  */
 public class Stack {
 
-    /** Fields */
+    /**
+     * Fields
+     */
     private String name;
     private List<Notecard> notecards;
 
-    /** Constructor */
+    /**
+     * Constructor for stack with given stack name
+     * @param name Name of new stack
+     */
     public Stack (String name) {
         this.name = name;
-        notecards = new ArrayList<>();
+        this.notecards = new ArrayList<>();
     }
 
-    /** Adds Notecard to the List */
-    public void addNotecard (Notecard newNotecard) {
-        this.notecards.add(newNotecard);
-    }
-
-    public void addNotecard (String json) {
-        Gson gson = new Gson();
-        Notecard notecard = gson.fromJson(json, Notecard.class);
-        this.notecards.add(notecard);
-    }
-
-    public void removeNotecard (Notecard notecard) {
-        notecards.remove(notecard);
-    }
-
-    /** Gets Stack name */
+    /**
+     * Gets the name of the stack
+     * @return Name of stack
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Adds a notecard to the stack
+     * @param notecard Notecard to add to stack
+     */
+    public void addNotecard (Notecard notecard) {
+        this.notecards.add(notecard);
+    }
+
+    /**
+     * Removes a notecard from the stack
+     * @param notecard Notecard to remove from stack
+     */
+    public void removeNotecard (Notecard notecard) {
+        for (Iterator<Notecard> iter = notecards.listIterator(); iter.hasNext();) {
+            Notecard curr = iter.next();
+            if (curr.getFront().compareTo(notecard.getFront()) == 0) {
+                iter.remove();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Gives notecard at specified position
+     * @param position Position in stack
+     * @return
+     */
     public Notecard at (int position) {
-        return notecards.get(position);
+        return this.notecards.get(position);
     }
 
-    public int size () {
-        return notecards.size();
-    }
-
+    /**
+     * Gives json string of stack object
+     * @return json string
+     */
     public String getJson () {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    /**
+     * Gives a reference to the notecards
+     * @return An immutable reference to the notecards
+     */
+    public List<Notecard> getNotecards () {
+        return Collections.unmodifiableList(this.notecards);
     }
 }
