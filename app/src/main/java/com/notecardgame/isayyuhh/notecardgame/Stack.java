@@ -13,12 +13,14 @@ public class Stack {
     private List<Notecard> stack;
 
     /** Constructor */
+    /*
     public Stack (String name) {
         this.name = name;
     }
+    */
 
-    public Stack () {
-
+    public Stack (String line) {
+        this.name = line;
     }
 
     /** Adds Notecard to the List */
