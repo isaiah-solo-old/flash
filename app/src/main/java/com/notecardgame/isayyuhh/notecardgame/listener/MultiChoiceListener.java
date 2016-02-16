@@ -8,6 +8,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 
@@ -15,12 +17,21 @@ import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
  * Created by isayyuhh on 2/15/16.
  */
 public class MultiChoiceListener implements AbsListView.MultiChoiceModeListener {
-    ListView listView;
-    StackListAdapter stackListAdapter;
+    private ListView listView;
+    private StackListAdapter stackListAdapter;
+    private NotecardListAdapter notecardListAdapter;
+    private boolean stack = false, notecard = false;
 
     public MultiChoiceListener (ListView listView, StackListAdapter stackListAdapter) {
         this.listView = listView;
         this.stackListAdapter = stackListAdapter;
+        this.stack = true;
+    }
+
+    public MultiChoiceListener (ListView listView, NotecardListAdapter notecardListAdapter) {
+        this.listView = listView;
+        this.notecardListAdapter = notecardListAdapter;
+        this.notecard = true;
     }
 
     @Override
@@ -31,7 +42,8 @@ public class MultiChoiceListener implements AbsListView.MultiChoiceModeListener 
         // Set the CAB title according to total checked items
         mode.setTitle(checkedCount + " Selected");
         // Calls toggleSelection method from ListViewAdapter Class
-        stackListAdapter.toggleSelection(position);
+        if (stack) stackListAdapter.toggleSelection(position);
+        else notecardListAdapter.toggleSelection(position);
     }
 
     @Override
@@ -39,15 +51,24 @@ public class MultiChoiceListener implements AbsListView.MultiChoiceModeListener 
         switch (item.getItemId()) {
             case R.id.delete:
                 // Calls getSelectedIds method from ListViewAdapter Class
-                SparseBooleanArray selected = stackListAdapter
-                        .getSelectedIds();
+                SparseBooleanArray selected;
+                if (stack) selected = stackListAdapter.getSelectedIds();
+                else selected = notecardListAdapter.getSelectedIds();
                 // Captures all selected ids with a loop
                 for (int i = (selected.size() - 1); i >= 0; i--) {
                     if (selected.valueAt(i)) {
-                        Stack selecteditem = stackListAdapter
-                                .getItem(selected.keyAt(i));
-                        // Remove selected items following the ids
-                        stackListAdapter.remove(selecteditem);
+                        if (stack) {
+                            Stack selecteditem = stackListAdapter.getItem(selected.keyAt(i));
+
+                            // Remove selected items following the ids
+                            stackListAdapter.remove(selecteditem);
+                        }
+                        else {
+                            Notecard selecteditem = notecardListAdapter.getItem(selected.keyAt(i));
+
+                            // Remove selected items following the ids
+                            notecardListAdapter.remove(selecteditem);
+                        }
                     }
                 }
                 // Close CAB
@@ -67,7 +88,8 @@ public class MultiChoiceListener implements AbsListView.MultiChoiceModeListener 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         // TODO Auto-generated method stub
-        stackListAdapter.removeSelection();
+        if (stack) stackListAdapter.removeSelection();
+        else notecardListAdapter.removeSelection();
     }
 
     @Override

@@ -10,14 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
-import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
+import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.fragment.MainMenuListFragment;
-import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
-import com.notecardgame.isayyuhh.notecardgame.listener.MultiChoiceListener;
-import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
+import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.R;
 
@@ -27,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,27 +37,31 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     private FragmentManager fm;
     private Toolbar mToolbar;
     private List<Stack> stacks;
+    private boolean init = false;
 
     /**
-     * OnCreate
+     * On initial created activity
+     * @param savedInstanceState Reference to the saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Sets View
+        // Sets initial view
         setContentView(R.layout.activity_main);
+
+        // Initializes variables
         initialize();
     }
 
     /**
-     * Initializes app
+     * Initializes variables
      */
     private void initialize() {
-        // Initializes Stacks
+        // Initializes stacks from internal storage file
         this.updateStacks();
 
-        // Sets Toolbar and title
+        // Sets toolbar and title
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorWhite));
 
@@ -68,20 +69,20 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         this.fm = getSupportFragmentManager();
         MainMenuListFragment newFragment = new MainMenuListFragment();
 
-        // Begins initial FragmentTransaction
-        FragmentTransaction ft = this.fm.beginTransaction();
-        ft.replace(R.id.listFragment, newFragment);
-        ft.commit();
+        // Sets initial fragment
+        this.setFragment(newFragment);
     }
 
-    private void updateFile () {
+    /**
+     * Updates internal storage file from reference to stacks
+     */
+    private void updateFile() {
         String filename = getResources().getString(R.string.stack_file_name);
         String newline = getResources().getString(R.string.new_line);
         try {
-            FileOutputStream fos;
-            fos = this.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = this.openFileOutput(filename, Context.MODE_PRIVATE);
             for (Stack stack: this.stacks) {
-                fos.write(stack.getStackName().getBytes());
+                fos.write(stack.getJson().getBytes());
                 fos.write(newline.getBytes());
             }
             fos.close();
@@ -91,7 +92,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         }
     }
 
-    private void updateStacks () {
+    /**
+     * Updates reference to stacks from internal storage file
+     */
+    private void updateStacks() {
         this.stacks = new ArrayList<>();
         String filename = getResources().getString(R.string.stack_file_name);
 
@@ -100,7 +104,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             String line;
             while ((line = br.readLine()) != null) {
-                this.stacks.add(new Stack(line));
+                Gson gson = new Gson();
+                Stack stack = gson.fromJson(line, Stack.class);
+
+                this.stacks.add(stack);
             }
             br.close();
         } catch (IOException ioe) {
@@ -109,33 +116,26 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         }
     }
 
-    @Override
-    public String getStr(int id) {
-        return this.getResources().getString(id);
-    }
-
-    @Override
-    public String[] getStrArr(int id) {
-        return this.getResources().getStringArray(id);
-    }
-
     /**
-     * Sets up new Fragment
+     * Sets new fragment
+     * @param fragment Fragment to transition to
      */
     @Override
-    public void setFragment(Fragment newFragment) {
+    public void setFragment(Fragment fragment) {
         // Starts FragmentTransaction
         FragmentTransaction ft = this.fm.beginTransaction();
-        ft.replace(R.id.listFragment, newFragment);
-        ft.addToBackStack(null);
+        ft.replace(R.id.listFragment, fragment);
+        if (this.init) ft.addToBackStack(null);
+        else this.init = true;
         ft.commit();
     }
 
     /**
-     * Sets up new DialogFragment
+     * Sets new dialog fragment
+     * @param fragment Dialog fragment to transition to
      */
     @Override
-    public void setDialogFragment(DialogFragment newFragment) {
+    public void setDialogFragment(DialogFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         Fragment prev = this.fm.findFragmentByTag("dialog");
         if (prev != null) {
@@ -144,59 +144,113 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        newFragment.show(ft, "dialog");
+        fragment.show(ft, "dialog");
     }
 
     /**
-     * Changes current Toolbar title
+     * Sets toolbar title to desired string
+     * @param title String to set title to
      */
     @Override
     public void setToolbarTitle(String title) {
         this.mToolbar.setTitle(title);
     }
 
+    /**
+     * Gets string from resources
+     * @param id Resource id
+     * @return String from resources
+     */
+    @Override
+    public String getStr(int id) {
+        return this.getResources().getString(id);
+    }
+
+    /**
+     * Gets string array from resources
+     * @param id Resource id
+     * @return String array from resources
+     */
+    @Override
+    public String[] getStrArr(int id) {
+        return this.getResources().getStringArray(id);
+    }
+
+    /**
+     * Adds stack to internal storage file
+     * @param stack Stack to add
+     */
+    @Override
+    public void addStack(Stack stack) {
+        //Stack newStack = new Stack(text);
+        this.stacks.add(stack);
+
+        this.updateFile();
+        this.updateStacks();
+    }
+
+    /**
+     * Deletes stack from internal storage file
+     * @param name Name of stack to delete
+     */
+    @Override
+    public void deleteStack(String name) {
+        for (Stack stack : this.stacks) {
+            if (stack.getName().equals(name)) {
+                this.stacks.remove(stack);
+                this.updateFile();
+                this.updateStacks();
+                return;
+            }
+        }
+        Log.e("FAIL", "Item does not exist in List");
+    }
+
+    /**
+     * Searches for stack in reference of stacks
+     * @param name Name of stack to search for
+     * @return Stack found
+     */
+    @Override
+    public Stack findStack(String name) {
+        Stack foundStack = null;
+        for (Stack stack: this.stacks) {
+            foundStack = stack;
+            if (name.compareTo(foundStack.getName()) == 0) break;
+        }
+        return foundStack;
+    }
+
+    /**
+     * Searches for stack at given position
+     * @param position Position of stack in reference of stacks
+     * @return Stack found
+     */
     @Override
     public Stack stacksAt(int position) {
         return this.stacks.get(position);
     }
 
     /**
-     * Updates the current Stacks in the Internal Storage
+     * Gives a reference to the stacks
+     * @return An immutable reference to the stacks
      */
     @Override
-    public void refreshStacksList(View view) {
-        this.updateStacks();
-
-        ListView listView = (ListView) view.findViewById(R.id.menu_list);
-        StackListAdapter adp = new StackListAdapter(this, this);
-        listView.setAdapter(adp);
-        adp.setData(stacks);
-        listView.setOnItemClickListener(new ItemClickListener(this, new StackListLogic(this)));
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new MultiChoiceListener(listView, adp));
-        listView.setItemsCanFocus(false);
+    public List<Stack> getStacks() {
+        return Collections.unmodifiableList(this.stacks);
     }
 
     /**
-     * Adds a Stack to the Internal Storage
+     * Adds notecard to given stack
+     * @param notecard Notecard to add to stack
+     * @param name Name of stack to add to
      */
     @Override
-    public void addStack(String text) {
-        Stack newStack = new Stack(text);
-        this.stacks.add(newStack);
+    public void addNotecardToStack(Notecard notecard, String name) {
+        Stack stack = this.findStack(name);
+        stack.addNotecard(notecard);
 
-        updateFile();
-    }
-
-    @Override
-    public void deleteStack(String name) {
-        for (Stack stack: this.stacks) {
-            if (stack.getStackName().equals(name)) {
-                this.stacks.remove(stack);
-                updateFile();
-                return;
-            }
-        }
-        Log.e("FAIL", "Item does not exist in List");
+        this.updateFile();
+        this.updateStacks();
     }
 }

@@ -44,14 +44,14 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
         }
         Stack stack = this.getItem(position);
         TextView stackName = (TextView) convertView.findViewById(R.id.stack_name);
-        stackName.setText(stack.getStackName());
+        stackName.setText(stack.getName());
         return convertView;
     }
 
     @Override
     public void remove(Stack object) {
         super.remove(object);
-        mCallback.deleteStack(object.getStackName());
+        mCallback.deleteStack(object.getName());
         this.notifyDataSetChanged();
     }
 

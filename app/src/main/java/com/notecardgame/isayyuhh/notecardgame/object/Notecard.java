@@ -1,5 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.object;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 /**
@@ -8,13 +10,20 @@ import java.util.List;
 public class Notecard {
     /** Fields */
     private String front;
-    private List<String> back;
+    private String back;
 
     /** Constructors */
-    public Notecard () {
-
+    public Notecard (String front, String back) {
+        this.front = front;
+        this.back = back;
     }
 
     /** Functions */
+    public String getFront () {
+        return this.front;
+    }
 
+    public String getBack () {
+        return this.back;
+    }
 }

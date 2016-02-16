@@ -8,9 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
+import com.notecardgame.isayyuhh.notecardgame.listener.MultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
 
 /**
  * Created by isayyuhh on 2/2/16.
@@ -21,7 +26,7 @@ public class StackListFragment extends Fragment {
      * Fields
      */
     private final static int MY_REQUEST_CODE = 1;
-    private StackListFragment smf = this;
+    private StackListFragment slf = this;
     private ActivityCallback mCallback;
     private View currentView;
 
@@ -52,7 +57,7 @@ public class StackListFragment extends Fragment {
             public void onClick(View view) {
                 // Starts Dialog
                 AddStackDialogFragment newFragment = new AddStackDialogFragment();
-                newFragment.setTargetFragment(smf, MY_REQUEST_CODE);
+                newFragment.setTargetFragment(slf, MY_REQUEST_CODE);
                 mCallback.setDialogFragment(newFragment);
             }
         });
@@ -68,6 +73,15 @@ public class StackListFragment extends Fragment {
      * Attaches Adapter and OnItemClickListener to the ListView
      */
     private void setListView(View view) {
-        this.mCallback.refreshStacksList(view);
+        ListView listView = (ListView) view.findViewById(R.id.menu_list);
+        StackListAdapter adp = new StackListAdapter(getActivity(), mCallback);
+        listView.setAdapter(adp);
+        adp.setData(this.mCallback.getStacks());
+
+        listView.setOnItemClickListener(new ItemClickListener(mCallback,
+                new StackListLogic(mCallback)));
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new MultiChoiceListener(listView, adp));
+        listView.setItemsCanFocus(false);
     }
 }

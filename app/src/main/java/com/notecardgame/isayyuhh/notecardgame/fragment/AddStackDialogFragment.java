@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
  * Created by isayyuhh on 2/3/16.
@@ -47,7 +48,8 @@ public class AddStackDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText et = (EditText) getDialog().findViewById(R.id.edit_stack_name);
                         String text = et.getText().toString();
-                        mCallback.addStack(text);
+                        Stack stack = new Stack(text);
+                        mCallback.addStack(stack);
                         getTargetFragment().onActivityResult(getTargetRequestCode(),
                                 Activity.RESULT_OK, getActivity().getIntent());
                         dialog.dismiss();
