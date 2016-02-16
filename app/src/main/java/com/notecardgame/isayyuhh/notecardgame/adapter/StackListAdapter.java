@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame;
+package com.notecardgame.isayyuhh.notecardgame.adapter;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -8,16 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
+import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.object.Stack;
+
 import java.util.List;
 
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class StackMenuAdapter extends ArrayAdapter<Stack> {
+public class StackListAdapter extends ArrayAdapter<Stack> {
     private SparseBooleanArray mSelectedItemsIds;
     private ActivityCallback mCallback;
 
-    public StackMenuAdapter(Context context, ActivityCallback mCallback) {
+    public StackListAdapter(Context context, ActivityCallback mCallback) {
         super(context, R.layout.item_stack);
         this.mCallback = mCallback;
         this.mSelectedItemsIds = new SparseBooleanArray();

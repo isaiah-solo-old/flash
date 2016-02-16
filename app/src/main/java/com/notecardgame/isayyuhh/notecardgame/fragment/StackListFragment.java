@@ -1,27 +1,27 @@
-package com.notecardgame.isayyuhh.notecardgame;
+package com.notecardgame.isayyuhh.notecardgame.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
+
+import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
+import com.notecardgame.isayyuhh.notecardgame.R;
 
 /**
  * Created by isayyuhh on 2/2/16.
  */
-public class StackMenuFragment extends Fragment {
+public class StackListFragment extends Fragment {
 
     /**
      * Fields
      */
     private final static int MY_REQUEST_CODE = 1;
-    private StackMenuFragment smf = this;
+    private StackListFragment smf = this;
     private ActivityCallback mCallback;
     private View currentView;
 
@@ -68,39 +68,6 @@ public class StackMenuFragment extends Fragment {
      * Attaches Adapter and OnItemClickListener to the ListView
      */
     private void setListView(View view) {
-        this.mCallback.refreshStacks(view, new MenuListListener(), new MenuListLongListener());
-    }
-
-    /**
-     * OnItemClickListener
-     */
-    private class MenuListListener implements AdapterView.OnItemClickListener {
-        /**
-         * Fields
-         */
-        public MenuListListener() {}
-
-        /**
-         * OnItemClick
-         */
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.e("STRING", ((TextView) view.findViewById(R.id.stack_name)).getText().toString());
-        }
-    }
-
-    /**
-     * OnItemLongClickListener
-     */
-    private class MenuListLongListener implements AdapterView.OnItemLongClickListener {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            /*
-            mCallback.deleteStack(mCallback.stacksAt(position).getStackName());
-            mCallback.refreshStacks(currentView, new MenuListListener(),
-                    new MenuListLongListener());
-            */
-            return true;
-        }
+        this.mCallback.refreshStacksList(view);
     }
 }

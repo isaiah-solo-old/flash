@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame;
+package com.notecardgame.isayyuhh.notecardgame.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,6 +8,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+
+import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
+import com.notecardgame.isayyuhh.notecardgame.R;
 
 /**
  * Created by isayyuhh on 2/3/16.

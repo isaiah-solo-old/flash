@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame;
+package com.notecardgame.isayyuhh.notecardgame.object;
 
 import java.util.List;
 
