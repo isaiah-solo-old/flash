@@ -13,8 +13,7 @@
         <ListView
             android:id="@+id/lv_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/colorBackground"
-            android:entries="@array/menu_main" />
+            android:layout_height="match_parent"/>
+            <!--android:entries="@array/menu_main"-->
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

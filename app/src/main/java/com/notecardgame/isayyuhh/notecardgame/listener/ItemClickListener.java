@@ -3,7 +3,6 @@ package com.notecardgame.isayyuhh.notecardgame.listener;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 
 /**
@@ -12,12 +11,10 @@ import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 public class ItemClickListener implements AdapterView.OnItemClickListener {
 
     /** Fields */
-    private ActivityCallback mCallback;
     private ListLogic listLogic;
 
     /** Constructors */
-    public ItemClickListener(ActivityCallback mCallback, ListLogic listLogic) {
-        this.mCallback = mCallback;
+    public ItemClickListener(ListLogic listLogic) {
         this.listLogic = listLogic;
     }
 

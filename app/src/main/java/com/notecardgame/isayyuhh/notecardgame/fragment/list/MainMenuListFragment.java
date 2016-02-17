@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.MainMenuListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
+import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.MainMenuListLogic;
 
 /**
@@ -41,9 +43,15 @@ public class MainMenuListFragment extends Fragment {
 
     /** Attaches OnItemClickListener to the ListView */
     private void setListView(View view) {
+        String[] array = this.mCallback.getStrArr(R.array.menu_main);
+        ListLogic listLogic = new MainMenuListLogic(mCallback);
+
         ListView listView = (ListView) view.findViewById(R.id.lv_main);
-        ItemClickListener listListener = new ItemClickListener(mCallback,
-                new MainMenuListLogic(mCallback));
+        MainMenuListAdapter adp = new MainMenuListAdapter(getActivity(), mCallback);
+        listView.setAdapter(adp);
+        adp.setData(array);
+
+        ItemClickListener listListener = new ItemClickListener(listLogic);
         listView.setOnItemClickListener(listListener);
     }
 }

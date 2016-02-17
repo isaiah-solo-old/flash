@@ -8,8 +8,6 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
-import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 

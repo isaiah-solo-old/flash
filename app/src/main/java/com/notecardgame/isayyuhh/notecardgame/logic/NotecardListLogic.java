@@ -12,13 +12,11 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
  */
 public class NotecardListLogic extends ListLogic {
     private ActivityCallback mCallback;
-    private boolean back;
     private String stackName;
 
     public NotecardListLogic(ActivityCallback mCallback) {
         this.mCallback = mCallback;
         this.listArray = mCallback.getStrArr(R.array.menu_main);
-        this.back = false;
     }
 
     @Override
@@ -32,12 +30,7 @@ public class NotecardListLogic extends ListLogic {
         String text = tv.getText().toString();
         Stack stack = this.mCallback.findStack(stackName);
         String back = stack.at(position).getBack();
-        if (text.compareTo(back) == 0) {
-            tv.setText(stack.at(position).getFront());
-            this.back = false;
-        } else {
-            tv.setText(stack.at(position).getBack());
-            this.back = true;
-        }
+        if (text.compareTo(back) == 0) tv.setText(stack.at(position).getFront());
+        else tv.setText(stack.at(position).getBack());
     }
 }

@@ -25,6 +25,9 @@ public class MainMenuListLogic extends ListLogic {
             case 1:
                 Log.e("PASS", listArray[position]);
                 break;
+            case 2:
+                Log.e("PASS", listArray[position]);
+                break;
             default:
                 Log.e("MAIN MENU ERROR", "invalid listview position");
         }
