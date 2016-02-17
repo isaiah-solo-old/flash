@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
+import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
@@ -20,6 +21,7 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
     private SparseBooleanArray mSelectedItemsIds;
     private ActivityCallback mCallback;
     private String stackName;
+    private ListLogic listLogic;
 
     public NotecardListAdapter(Context context, ActivityCallback mCallback) {
         super(context, R.layout.item_stack);
@@ -27,12 +29,14 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
         this.mSelectedItemsIds = new SparseBooleanArray();
     }
 
-    public void setData(Stack stack) {
+    public void setData(Stack stack, ListLogic listLogic) {
         this.clear();
         for(Notecard notecard: stack.getNotecards()) {
             this.add(notecard);
         }
         this.stackName = stack.getName();
+        this.listLogic = listLogic;
+        this.listLogic.setStackName(this.stackName);
         this.notifyDataSetChanged();
     }
 
@@ -44,10 +48,9 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
             convertView = inflater.inflate(R.layout.item_notecard, null);
         }
         Notecard notecard = this.getItem(position);
-        TextView notecardFront = (TextView) convertView.findViewById(R.id.notecard_front);
-        TextView notecardBack = (TextView) convertView.findViewById(R.id.notecard_back);
+
+        TextView notecardFront = (TextView) convertView.findViewById(R.id.notecard_side);
         notecardFront.setText(notecard.getFront());
-        notecardBack.setText(notecard.getBack());
         return convertView;
     }
 
@@ -68,15 +71,9 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
     }
 
     public void selectView(int position, boolean value) {
-        if (value)
-            this.mSelectedItemsIds.put(position, value);
-        else
-            this.mSelectedItemsIds.delete(position);
+        if (value) this.mSelectedItemsIds.put(position, value);
+        else this.mSelectedItemsIds.delete(position);
         this.notifyDataSetChanged();
-    }
-
-    public int getSelectedCount() {
-        return this.mSelectedItemsIds.size();
     }
 
     public SparseBooleanArray getSelectedIds() {

@@ -1,6 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.logic;
 
 import android.util.Log;
+import android.view.View;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
@@ -15,7 +16,7 @@ public class MainMenuListLogic extends ListLogic {
         this.listArray = mCallback.getStrArr(R.array.menu_main);
     }
 
-    public void onClick (int position) {
+    public void onClick (int position, View view) {
         switch (position) {
             case 0:
                 StackListFragment newFragment = new StackListFragment();

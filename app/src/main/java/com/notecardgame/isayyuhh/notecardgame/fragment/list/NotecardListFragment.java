@@ -17,6 +17,8 @@ import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddNotecardDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
 import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
+import com.notecardgame.isayyuhh.notecardgame.logic.NotecardListLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
@@ -62,7 +64,7 @@ public class NotecardListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
         this.currentView = inflater.inflate(R.layout.list_notecard, container, false);
-        this.mCallback.setToolbarTitle("Notecards");
+        this.mCallback.setToolbarTitle("\"" + this.stack.getName() + "\"" + " Notecards");
         setListView(currentView);
 
         // FloatingActionButton
@@ -95,14 +97,14 @@ public class NotecardListFragment extends Fragment {
      */
     private void setListView(View view) {
         this.stack = this.mCallback.findStack(this.stack.getName());
+        ListLogic listLogic = new NotecardListLogic(mCallback);
 
         ListView listView = (ListView) view.findViewById(R.id.lv_notecard);
         NotecardListAdapter adp = new NotecardListAdapter(getActivity(), this.mCallback);
         listView.setAdapter(adp);
-        adp.setData(this.stack);
+        adp.setData(this.stack, listLogic);
 
-        listView.setOnItemClickListener(new ItemClickListener(mCallback,
-                new StackListLogic(mCallback)));
+        listView.setOnItemClickListener(new ItemClickListener(mCallback, listLogic));
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(listView, adp));

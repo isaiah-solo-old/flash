@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     private FragmentManager fm;
     private Toolbar mToolbar;
     private List<Stack> stacks;
+    private Notecard tappedNotecard = null;
     private boolean init = false;
 
     /**
@@ -273,5 +274,33 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         stack.removeNotecard(notecard);
 
         this.update();
+    }
+
+    @Override
+    public String getNotecardBack(String front) {
+        String foundNotecardBack = null;
+        for (Stack stack: this.stacks) {
+            for (Notecard notecard: stack.getNotecards()) {
+                if (front.compareTo(notecard.getFront()) == 0) {
+                    foundNotecardBack = notecard.getBack();
+                    break;
+                }
+            }
+        }
+        return foundNotecardBack;
+    }
+
+    @Override
+    public String getNotecardFront(String back) {
+        String foundNotecardFront = null;
+        for (Stack stack: this.stacks) {
+            for (Notecard notecard: stack.getNotecards()) {
+                if (back.compareTo(notecard.getBack()) == 0) {
+                    foundNotecardFront = notecard.getFront();
+                    break;
+                }
+            }
+        }
+        return foundNotecardFront;
     }
 }

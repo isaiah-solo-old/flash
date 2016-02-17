@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class StackListAdapter extends ArrayAdapter<Stack> {
     private SparseBooleanArray mSelectedItemsIds;
     private ActivityCallback mCallback;
+    private ListLogic listLogic;
 
     public StackListAdapter(Context context, ActivityCallback mCallback) {
         super(context, R.layout.item_stack);
@@ -27,11 +29,12 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
         this.mSelectedItemsIds = new SparseBooleanArray();
     }
 
-    public void setData(List<Stack> stacks) {
+    public void setData(List<Stack> stacks, ListLogic listLogic) {
         this.clear();
         for(Stack stack : stacks) {
             this.add(stack);
         }
+        this.listLogic = listLogic;
         this.notifyDataSetChanged();
     }
 
@@ -70,10 +73,6 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
         else
             this.mSelectedItemsIds.delete(position);
         this.notifyDataSetChanged();
-    }
-
-    public int getSelectedCount() {
-        return this.mSelectedItemsIds.size();
     }
 
     public SparseBooleanArray getSelectedIds() {

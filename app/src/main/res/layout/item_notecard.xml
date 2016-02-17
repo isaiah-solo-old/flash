@@ -11,7 +11,7 @@
     <cardview:android.support.v7.widget.CardView
         android:id="@+id/notecard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/notecard_height"
         android:layout_margin="8dip"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:orientation="vertical"
@@ -23,21 +23,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/notecard_front"
+                android:id="@+id/notecard_side"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="20dip"
                 android:layout_marginTop="20dip"
-                android:gravity="center_horizontal"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/notecard_back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginTop="20dip"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:textSize="20sp" />
         </LinearLayout>
     </cardview:android.support.v7.widget.CardView>

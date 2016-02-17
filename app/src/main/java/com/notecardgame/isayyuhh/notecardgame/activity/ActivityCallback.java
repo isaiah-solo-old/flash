@@ -36,5 +36,7 @@ public interface ActivityCallback {
     /** Notecard functions */
     void addNotecardToStack (Notecard notecard, String name);
     void removeNotecardFromStack (Notecard notecard, String name);
+    String getNotecardBack (String front);
+    String getNotecardFront (String back);
 }
 

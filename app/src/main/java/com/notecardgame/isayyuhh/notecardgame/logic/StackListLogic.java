@@ -1,6 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.logic;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
@@ -17,7 +18,8 @@ public class StackListLogic extends ListLogic {
         this.listArray = mCallback.getStrArr(R.array.menu_main);
     }
 
-    public void onClick (int position) {
+    @Override
+    public void onClick (int position, View view) {
         Stack stack = this.mCallback.stacksAt(position);
         Bundle b = new Bundle();
         Gson gson = new Gson();

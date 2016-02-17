@@ -16,6 +16,7 @@ import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddStackDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
 import com.notecardgame.isayyuhh.notecardgame.listener.StackMultiChoiceListener;
+import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
 
 /**
@@ -48,7 +49,7 @@ public class StackListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
         this.currentView = inflater.inflate(R.layout.list_stack, container, false);
-        this.mCallback.setToolbarTitle("Stacks");
+        this.mCallback.setToolbarTitle("Notecard Stacks");
         setListView(currentView);
 
         // FloatingActionButton
@@ -74,13 +75,14 @@ public class StackListFragment extends Fragment {
      * Attaches Adapter and OnItemClickListener to the ListView
      */
     private void setListView(View view) {
+        ListLogic listLogic = new StackListLogic(mCallback);
+
         ListView listView = (ListView) view.findViewById(R.id.lv_stack);
         StackListAdapter adp = new StackListAdapter(getActivity(), mCallback);
         listView.setAdapter(adp);
-        adp.setData(this.mCallback.getStacks());
+        adp.setData(this.mCallback.getStacks(), listLogic);
 
-        listView.setOnItemClickListener(new ItemClickListener(mCallback,
-                new StackListLogic(mCallback)));
+        listView.setOnItemClickListener(new ItemClickListener(mCallback, listLogic));
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new StackMultiChoiceListener(listView, adp));

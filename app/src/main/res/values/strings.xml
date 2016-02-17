@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">NotecardGame</string>
+    <string name="app_name">Notecard.study</string>
 
     <!-- File Names -->
     <string name="filename_stacks">notecards</string>
@@ -14,7 +14,7 @@
 
     <!-- Literal String Arrays -->
     <string-array name="menu_main">
-        <item>Your Notecards</item>
+        <item>Your Notecard Stacks</item>
         <item>Quiz!</item>
     </string-array>
 </resources>

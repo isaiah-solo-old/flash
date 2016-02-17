@@ -12,8 +12,8 @@ import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 public class ItemClickListener implements AdapterView.OnItemClickListener {
 
     /** Fields */
-    ActivityCallback mCallback;
-    ListLogic listLogic;
+    private ActivityCallback mCallback;
+    private ListLogic listLogic;
 
     /** Constructors */
     public ItemClickListener(ActivityCallback mCallback, ListLogic listLogic) {
@@ -24,6 +24,6 @@ public class ItemClickListener implements AdapterView.OnItemClickListener {
     /** OnItemClick */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        this.listLogic.onClick(position);
+        this.listLogic.onClick(position, view);
     }
 }
