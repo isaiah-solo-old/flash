@@ -41,7 +41,7 @@ public class AddStackDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_new_stack, null))
-                .setTitle(getActivity().getResources().getString(R.string.add_stack))
+                .setTitle(getActivity().getResources().getString(R.string.literal_addnotecard))
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
                     @Override

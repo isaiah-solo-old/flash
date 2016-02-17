@@ -1,5 +1,6 @@
 package com.notecardgame.isayyuhh.notecardgame.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
         // Sets toolbar and title
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorWhite));
+        this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorText));
 
         // Sets FragmentManager
         this.fm = getSupportFragmentManager();
@@ -77,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * Updates internal storage file from reference to stacks
      */
     private void updateFile() {
-        String filename = getResources().getString(R.string.stack_file_name);
-        String newline = getResources().getString(R.string.new_line);
+        String filename = getResources().getString(R.string.filename_stacks);
+        String newline = getResources().getString(R.string.literal_newline);
         try {
             FileOutputStream fos = this.openFileOutput(filename, Context.MODE_PRIVATE);
             for (Stack stack: this.stacks) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      */
     private void updateStacks() {
         this.stacks = new ArrayList<>();
-        String filename = getResources().getString(R.string.stack_file_name);
+        String filename = getResources().getString(R.string.filename_stacks);
 
         try {
             FileInputStream fis = this.openFileInput(filename);
@@ -116,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         }
     }
 
+    @Override
+    public Activity activity() {
+        return this;
+    }
+
     /**
      * Sets new fragment
      * @param fragment Fragment to transition to
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     public void setFragment(Fragment fragment) {
         // Starts FragmentTransaction
         FragmentTransaction ft = this.fm.beginTransaction();
-        ft.replace(R.id.listFragment, fragment);
+        ft.replace(R.id.fragment, fragment);
         if (this.init) ft.addToBackStack(null);
         else this.init = true;
         ft.commit();

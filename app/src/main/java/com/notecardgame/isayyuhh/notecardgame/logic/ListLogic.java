@@ -9,5 +9,6 @@ public abstract class ListLogic {
     protected ActivityCallback mCallback;
     protected String[] listArray;
 
+    public void onLongClick (String text) {};
     public abstract void onClick (int position);
 }

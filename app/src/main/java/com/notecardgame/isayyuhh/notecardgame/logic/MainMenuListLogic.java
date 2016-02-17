@@ -12,7 +12,7 @@ import com.notecardgame.isayyuhh.notecardgame.fragment.list.StackListFragment;
 public class MainMenuListLogic extends ListLogic {
     public MainMenuListLogic (ActivityCallback mCallback) {
         this.mCallback = mCallback;
-        this.listArray = mCallback.getStrArr(R.array.main_menu);
+        this.listArray = mCallback.getStrArr(R.array.menu_main);
     }
 
     public void onClick (int position) {

@@ -1,7 +1,5 @@
 package com.notecardgame.isayyuhh.notecardgame.object;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -33,8 +31,16 @@ public class Stack {
      * Gets the name of the stack
      * @return Name of stack
      */
-    public String getName() {
+    public String getName () {
         return this.name;
+    }
+
+    /**
+     * Gets the size of the stack
+     * @return Amount of notecards in the stack
+     */
+    public int size () {
+        return this.notecards.size();
     }
 
     /**

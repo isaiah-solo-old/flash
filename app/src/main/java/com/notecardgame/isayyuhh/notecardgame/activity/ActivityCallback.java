@@ -1,5 +1,6 @@
 package com.notecardgame.isayyuhh.notecardgame.activity;
 
+import android.app.Activity;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 
@@ -12,6 +13,9 @@ import java.util.List;
  * Created by isayyuhh on 2/2/16.
  */
 public interface ActivityCallback {
+    /** Activity functions */
+    Activity activity ();
+
     /** FragmentManager functions*/
     void setFragment (Fragment newFragment);
     void setDialogFragment (DialogFragment newFragment);

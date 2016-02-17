@@ -81,6 +81,7 @@ public class StackListFragment extends Fragment {
 
         listView.setOnItemClickListener(new ItemClickListener(mCallback,
                 new StackListLogic(mCallback)));
+
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new StackMultiChoiceListener(listView, adp));
         listView.setItemsCanFocus(false);

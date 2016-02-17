@@ -1,5 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.logic;
 
+import android.util.Log;
+
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 
@@ -9,10 +11,11 @@ import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 public class NotecardListLogic extends ListLogic {
     public NotecardListLogic(ActivityCallback mCallback) {
         this.mCallback = mCallback;
-        this.listArray = mCallback.getStrArr(R.array.main_menu);
+        this.listArray = mCallback.getStrArr(R.array.menu_main);
     }
 
-    public void onClick (int position) {
-        //Log.e("STRING", ((TextView) view.findViewById(R.id.stack_name)).getText().toString());
+    @Override
+    public void onClick(int position) {
+
     }
 }

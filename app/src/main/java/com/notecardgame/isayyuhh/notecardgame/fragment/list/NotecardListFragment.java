@@ -17,8 +17,7 @@ import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddNotecardDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
 import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
-import com.notecardgame.isayyuhh.notecardgame.listener.StackMultiChoiceListener;
-import com.notecardgame.isayyuhh.notecardgame.logic.NotecardListLogic;
+import com.notecardgame.isayyuhh.notecardgame.logic.StackListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
@@ -102,8 +101,9 @@ public class NotecardListFragment extends Fragment {
         listView.setAdapter(adp);
         adp.setData(this.stack);
 
-        listView.setOnItemClickListener(new ItemClickListener(this.mCallback,
-                new NotecardListLogic(this.mCallback)));
+        listView.setOnItemClickListener(new ItemClickListener(mCallback,
+                new StackListLogic(mCallback)));
+
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(listView, adp));
         listView.setItemsCanFocus(false);

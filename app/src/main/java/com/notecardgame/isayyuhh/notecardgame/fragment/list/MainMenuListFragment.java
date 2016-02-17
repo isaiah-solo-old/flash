@@ -41,7 +41,7 @@ public class MainMenuListFragment extends Fragment {
 
     /** Attaches OnItemClickListener to the ListView */
     private void setListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.menu_list);
+        ListView listView = (ListView) view.findViewById(R.id.lv_main);
         ItemClickListener listListener = new ItemClickListener(mCallback,
                 new MainMenuListLogic(mCallback));
         listView.setOnItemClickListener(listListener);
