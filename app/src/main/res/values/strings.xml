@@ -7,8 +7,8 @@
 
     <!-- Toolbar Titles -->
     <string name="title_stacks">Notecard Stacks</string>
-    <string name="title_notecards">\u0020Notecards</string>
-    <string name="title_notecard">Notecard</string>
+    <string name="title_notecards">\u0020Stack</string>
+    <string name="title_notecard">Edit Notecard</string>
 
     <!-- Fragment Tags -->
     <string name="tag_dialog">dialog</string>
