@@ -8,21 +8,24 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
-import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 
 /**
  * Created by isayyuhh on 2/3/16.
  */
 public class MainMenuListAdapter extends ArrayAdapter<String> {
-    private ActivityCallback mCallback;
-    private ListLogic listLogic;
 
-    public MainMenuListAdapter(Context context, ActivityCallback mCallback) {
+    /**
+     * Adapter constructor
+     * @param context Activity context
+     */
+    public MainMenuListAdapter(Context context) {
         super(context, R.layout.item_stack);
-        this.mCallback = mCallback;
     }
 
+    /**
+     * Sets data to adapter
+     * @param array Array to add to adapter
+     */
     public void setData(String[] array) {
         this.clear();
         for(String string: array) {
@@ -31,6 +34,13 @@ public class MainMenuListAdapter extends ArrayAdapter<String> {
         this.notifyDataSetChanged();
     }
 
+    /**
+     * Sets item view
+     * @param position Reference to position
+     * @param convertView View to inflate
+     * @param parent Reference to ViewGroup
+     * @return View to inflate
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

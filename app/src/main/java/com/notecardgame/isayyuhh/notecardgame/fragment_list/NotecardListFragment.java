@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment.list;
+package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.AddNotecardDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
 import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
 import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
@@ -36,7 +36,8 @@ public class NotecardListFragment extends Fragment {
     private View currentView;
 
     /**
-     * OnAttach
+     * On attach fragment to activity
+     * @param activity Activity to attach to
      */
     @Override
     public void onAttach(Activity activity) {
@@ -44,6 +45,10 @@ public class NotecardListFragment extends Fragment {
         this.mCallback = (ActivityCallback) activity;
     }
 
+    /**
+     * On created fragment
+     * @param savedInstanceState Reference to the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +61,19 @@ public class NotecardListFragment extends Fragment {
     }
 
     /**
-     * OnCreateView
+     * On created view
+     * @param inflater View inflater
+     * @param container Reference to viewgroup
+     * @param savedInstanceState Reference to the saved instance state
+     * @return Inflated view
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
         this.currentView = inflater.inflate(R.layout.list_notecard, container, false);
-        this.mCallback.setToolbarTitle(this.stack.getName() + " Notecards");
+        this.mCallback.setToolbarTitle(this.stack.getName() +
+                this.mCallback.getStr(R.string.title_notecards));
         setListView(currentView);
 
         // FloatingActionButton
@@ -86,30 +96,34 @@ public class NotecardListFragment extends Fragment {
         return this.currentView;
     }
 
+    /**
+     * Gathers data from dialog fragment
+     * @param requestCode Request code
+     * @param resultCode Result code
+     * @param data Activity intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         this.setListView(this.currentView);
     }
 
     /**
-     * Attaches Adapter and OnItemClickListener to the ListView
+     * Sets on-click listener and adapter to listview
+     * @param view Inflated view
      */
     private void setListView(View view) {
-        // Listview
         ListView listView = (ListView) view.findViewById(R.id.lv_notecard);
 
-        // Variables
         this.stack = this.mCallback.findStack(this.stack.getName());
         ListLogic listLogic = new NotecardListLogic(mCallback);
 
-        // Adapter
         NotecardListAdapter adp = new NotecardListAdapter(getActivity(), this.mCallback);
         listView.setAdapter(adp);
         adp.setData(this.stack, listLogic);
 
-        // Set listview
         listView.setOnItemClickListener(new ItemClickListener(listLogic));
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(listView, adp));
+        listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(this.mCallback,
+                listView, adp));
     }
 }

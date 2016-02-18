@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment.list;
+package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -20,17 +20,28 @@ import com.notecardgame.isayyuhh.notecardgame.logic.MainMenuListLogic;
  */
 public class MainMenuListFragment extends Fragment {
 
-    /** Fields */
+    /**
+     * Fields
+     */
     private ActivityCallback mCallback;
 
-    /** OnAttach */
+    /**
+     * On attach fragment to activity
+     * @param activity Activity to attach to
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.mCallback = (ActivityCallback) activity;
     }
 
-    /** OnCreateView */
+    /**
+     * On created view
+     * @param inflater View inflater
+     * @param container Reference to viewgroup
+     * @param savedInstanceState Reference to the saved instance state
+     * @return Inflated view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,17 +52,20 @@ public class MainMenuListFragment extends Fragment {
         return view;
     }
 
-    /** Attaches OnItemClickListener to the ListView */
+    /**
+     * Sets on-click listener and adapter to listview
+     * @param view Inflated view
+     */
     private void setListView(View view) {
+        ListView listView = (ListView) view.findViewById(R.id.lv_main);
+
         String[] array = this.mCallback.getStrArr(R.array.menu_main);
         ListLogic listLogic = new MainMenuListLogic(mCallback);
 
-        ListView listView = (ListView) view.findViewById(R.id.lv_main);
-        MainMenuListAdapter adp = new MainMenuListAdapter(getActivity(), mCallback);
+        MainMenuListAdapter adp = new MainMenuListAdapter(getActivity());
         listView.setAdapter(adp);
         adp.setData(array);
 
-        ItemClickListener listListener = new ItemClickListener(listLogic);
-        listView.setOnItemClickListener(listListener);
+        listView.setOnItemClickListener(new ItemClickListener(listLogic));
     }
 }

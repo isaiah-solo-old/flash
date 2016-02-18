@@ -7,6 +7,7 @@
 
     <EditText
         android:id="@+id/edit_stack_name"
+        android:hint="@string/literal_stacknamehint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

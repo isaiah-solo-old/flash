@@ -1,16 +1,32 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">Indices</string>
+    <string name="app_name">Flash</string>
 
     <!-- File Names -->
     <string name="filename_stacks">notecards</string>
 
+    <!-- Toolbar Titles -->
+    <string name="title_stacks">Notecard Stacks</string>
+    <string name="title_notecards">\u0020Notecards</string>
+
+    <!-- Fragment Tags -->
+    <string name="tag_dialog">dialog</string>
+
+    <!-- Bundle Keys -->
+
+
     <!-- Literal Strings -->
-    <string name="literal_addstack">Enter a new Stack name:</string>
-    <string name="literal_addnotecard">New Notecard:</string>
+    <string name="literal_addstack">Create new Stack:</string>
+    <string name="literal_addnotecard">Create new Notecard:</string>
     <string name="literal_newline">\n</string>
     <string name="literal_deleteselection">Delete</string>>
+    <string name="literal_amountselected">\u0020Selected</string>
     <string name="literal_settings">Settings</string>
+    <string name="literal_positive">Ok</string>
+    <string name="literal_negative">Cancel</string>
+    <string name="literal_stacknamehint">New name</string>
+    <string name="literal_fronthint">New front</string>
+    <string name="literal_backhint">New back</string>
 
     <!-- Literal String Arrays -->
     <string-array name="menu_main">

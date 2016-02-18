@@ -10,17 +10,28 @@ import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
  */
 public class ItemClickListener implements AdapterView.OnItemClickListener {
 
-    /** Fields */
+    /**
+     * Fields
+     */
     private ListLogic listLogic;
 
-    /** Constructors */
+    /**
+     * On-click listener constructor
+     * @param listLogic On-click logic
+     */
     public ItemClickListener(ListLogic listLogic) {
         this.listLogic = listLogic;
     }
 
-    /** OnItemClick */
+    /**
+     * Uses logic on on-item click
+     * @param parent Parent view
+     * @param view View of item
+     * @param position Position of item
+     * @param id Id of item
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        this.listLogic.onClick(position, view);
+        this.listLogic.doLogic(position, view);
     }
 }

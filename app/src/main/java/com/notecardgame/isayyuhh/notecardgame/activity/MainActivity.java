@@ -1,6 +1,5 @@
 package com.notecardgame.isayyuhh.notecardgame.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -13,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.notecardgame.isayyuhh.notecardgame.fragment.list.MainMenuListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment_list.MainMenuListFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.R;
@@ -38,21 +37,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     private FragmentManager fm;
     private Toolbar mToolbar;
     private List<Stack> stacks;
-    private Notecard tappedNotecard = null;
     private boolean init = false;
 
     /**
-     * On initial created activity
+     * On created activity
      * @param savedInstanceState Reference to the saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Sets initial view
         setContentView(R.layout.activity_main);
 
-        // Initializes variables
         initialize();
     }
 
@@ -60,18 +55,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * Initializes variables
      */
     private void initialize() {
-        // Initializes stacks from internal storage file
         this.updateStacks();
 
-        // Sets toolbar and title
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorText));
 
-        // Sets FragmentManager
         this.fm = getSupportFragmentManager();
         MainMenuListFragment newFragment = new MainMenuListFragment();
 
-        // Sets initial fragment
         this.setFragment(newFragment);
     }
 
@@ -118,18 +109,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         }
     }
 
-    @Override
-    public Activity activity() {
-        return this;
-    }
-
     /**
      * Sets new fragment
      * @param fragment Fragment to transition to
      */
     @Override
     public void setFragment(Fragment fragment) {
-        // Starts FragmentTransaction
         FragmentTransaction ft = this.fm.beginTransaction();
         ft.replace(R.id.fragment, fragment);
         if (this.init) ft.addToBackStack(null);
@@ -144,14 +129,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     @Override
     public void setDialogFragment(DialogFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
-        Fragment prev = this.fm.findFragmentByTag("dialog");
+        Fragment prev = this.fm.findFragmentByTag(this.getStr(R.string.tag_dialog));
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        fragment.show(ft, "dialog");
+        fragment.show(ft, this.getStr(R.string.tag_dialog));
     }
 
     /**
@@ -189,9 +172,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      */
     @Override
     public void addStack(Stack stack) {
-        //Stack newStack = new Stack(text);
         this.stacks.add(stack);
-
         this.update();
     }
 
@@ -274,33 +255,5 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         stack.removeNotecard(notecard);
 
         this.update();
-    }
-
-    @Override
-    public String getNotecardBack(String front) {
-        String foundNotecardBack = null;
-        for (Stack stack: this.stacks) {
-            for (Notecard notecard: stack.getNotecards()) {
-                if (front.compareTo(notecard.getFront()) == 0) {
-                    foundNotecardBack = notecard.getBack();
-                    break;
-                }
-            }
-        }
-        return foundNotecardBack;
-    }
-
-    @Override
-    public String getNotecardFront(String back) {
-        String foundNotecardFront = null;
-        for (Stack stack: this.stacks) {
-            for (Notecard notecard: stack.getNotecards()) {
-                if (back.compareTo(notecard.getBack()) == 0) {
-                    foundNotecardFront = notecard.getFront();
-                    break;
-                }
-            }
-        }
-        return foundNotecardFront;
     }
 }

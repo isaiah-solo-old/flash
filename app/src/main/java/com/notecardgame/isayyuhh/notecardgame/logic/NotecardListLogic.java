@@ -11,21 +11,37 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
  * Created by isayyuhh on 2/15/16.
  */
 public class NotecardListLogic extends ListLogic {
-    private ActivityCallback mCallback;
+
+    /**
+     * Fields
+     */
     private String stackName;
 
+    /**
+     * Logic constructor
+     * @param mCallback Reference to activity
+     */
     public NotecardListLogic(ActivityCallback mCallback) {
         this.mCallback = mCallback;
         this.listArray = mCallback.getStrArr(R.array.menu_main);
     }
 
+    /**
+     * Sets reference of the name of the stack
+     * @param name Reference to name of stack
+     */
     @Override
     public void setStackName (String name) {
         this.stackName = name;
     }
 
+    /**
+     * Does logic
+     * @param position Position of list element
+     * @param view Item view
+     */
     @Override
-    public void onClick(int position, View view) {
+    public void doLogic(int position, View view) {
         TextView tv = (TextView) view.findViewById(R.id.notecard_side);
         String text = tv.getText().toString();
         Stack stack = this.mCallback.findStack(stackName);

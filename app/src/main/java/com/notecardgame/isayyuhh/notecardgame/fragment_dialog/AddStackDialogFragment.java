@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment.dialog;
+package com.notecardgame.isayyuhh.notecardgame.fragment_dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,17 +17,21 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
  * Created by isayyuhh on 2/3/16.
  */
 public class AddStackDialogFragment extends DialogFragment {
+
     /**
      * Fields
      */
     private ActivityCallback mCallback;
 
     /**
-     * Constructors
+     * Default Constructor
      */
-    public AddStackDialogFragment() {
-    }
+    public AddStackDialogFragment() {}
 
+    /**
+     * On attach fragment to activity
+     * @param activity Activity to attach to
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -35,14 +39,17 @@ public class AddStackDialogFragment extends DialogFragment {
     }
 
     /**
-     * OnCreateView
+     * On created dialog
+     * @param savedInstanceState Reference to the saved instance state
+     * @return Created dialog
      */
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_new_stack, null))
                 .setTitle(getActivity().getResources().getString(R.string.literal_addstack))
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(this.mCallback.getStr(R.string.literal_positive),
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -55,7 +62,8 @@ public class AddStackDialogFragment extends DialogFragment {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(this.mCallback.getStr(R.string.literal_negative),
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

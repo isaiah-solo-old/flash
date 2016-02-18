@@ -1,4 +1,4 @@
-package com.notecardgame.isayyuhh.notecardgame.fragment.dialog;
+package com.notecardgame.isayyuhh.notecardgame.fragment_dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +17,7 @@ import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
  * Created by isayyuhh on 2/3/16.
  */
 public class AddNotecardDialogFragment extends DialogFragment {
+
     /**
      * Fields
      */
@@ -24,16 +25,24 @@ public class AddNotecardDialogFragment extends DialogFragment {
     private String stackName;
 
     /**
-     * Constructors
+     * Default Constructor
      */
     public AddNotecardDialogFragment() {}
 
+    /**
+     * On attach fragment to activity
+     * @param activity Activity to attach to
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.mCallback = (ActivityCallback) activity;
     }
 
+    /**
+     * On created fragment
+     * @param savedInstanceState Reference to the saved instance state
+     */
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +52,9 @@ public class AddNotecardDialogFragment extends DialogFragment {
     }
 
     /**
-     * onCreateDialog
+     * On created dialog
+     * @param savedInstanceState Reference to the saved instance state
+     * @return Created dialog
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -51,7 +62,8 @@ public class AddNotecardDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_new_notecard, null))
                 .setTitle(getActivity().getResources().getString(R.string.literal_addnotecard))
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(this.mCallback.getStr(R.string.literal_positive),
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -66,7 +78,8 @@ public class AddNotecardDialogFragment extends DialogFragment {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(this.mCallback.getStr(R.string.literal_negative),
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
