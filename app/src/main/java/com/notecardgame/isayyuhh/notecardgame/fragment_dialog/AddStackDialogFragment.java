@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
@@ -55,6 +56,16 @@ public class AddStackDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText et = (EditText) getDialog().findViewById(R.id.edit_stack_name);
                         String text = et.getText().toString();
+                        if (text.trim().length() < 1) {
+                            Toast.makeText(getActivity(), "Enter stack name",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else if (mCallback.findStack(text) != null) {
+                            Toast.makeText(getActivity(), "Stack name already exists",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Stack stack = new Stack(text);
                         mCallback.addStack(stack);
                         getTargetFragment().onActivityResult(getTargetRequestCode(),

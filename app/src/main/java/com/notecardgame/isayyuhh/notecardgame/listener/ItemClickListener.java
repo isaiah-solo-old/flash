@@ -1,37 +1,36 @@
 package com.notecardgame.isayyuhh.notecardgame.listener;
 
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.notecardgame.isayyuhh.notecardgame.logic.ItemLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 
 /**
  * Created by isayyuhh on 2/15/16.
  */
-public class ItemClickListener implements AdapterView.OnItemClickListener {
+public class ItemClickListener implements CardView.OnClickListener {
 
     /**
      * Fields
      */
-    private ListLogic listLogic;
+    private ItemLogic itemLogic;
 
     /**
      * On-click listener constructor
-     * @param listLogic On-click logic
+     * @param itemLogic On-click logic
      */
-    public ItemClickListener(ListLogic listLogic) {
-        this.listLogic = listLogic;
+    public ItemClickListener(ItemLogic itemLogic) {
+        this.itemLogic = itemLogic;
     }
 
     /**
      * Uses logic on on-item click
-     * @param parent Parent view
-     * @param view View of item
-     * @param position Position of item
-     * @param id Id of item
+     * @param v View
      */
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        this.listLogic.doLogic(position, view);
+    public void onClick(View v) {
+        this.itemLogic.doLogic(v);
     }
 }

@@ -36,4 +36,20 @@ public class Notecard {
     public String getBack () {
         return this.back;
     }
+
+    /**
+     * Sets front of notecard
+     * @param front New front string
+     */
+    public void setFront (String front) {
+        this.front = front;
+    }
+
+    /**
+     * Sets back of notecard
+     * @param back New back string
+     */
+    public void setBack (String back) {
+        this.back = back;
+    }
 }

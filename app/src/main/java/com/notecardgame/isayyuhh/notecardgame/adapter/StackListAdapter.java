@@ -33,7 +33,7 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
      * @param mCallback Reference to Activity
      */
     public StackListAdapter(Context context, ActivityCallback mCallback) {
-        super(context, R.layout.item_stack);
+        super(context, R.layout.list_item_stack);
         this.mCallback = mCallback;
         this.mSelectedItemsIds = new SparseBooleanArray();
     }
@@ -64,7 +64,7 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_stack, null);
+            convertView = inflater.inflate(R.layout.list_item_stack, null);
         }
         Stack stack = this.getItem(position);
         TextView stackName = (TextView) convertView.findViewById(R.id.stack_name);

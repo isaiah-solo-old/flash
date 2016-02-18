@@ -19,7 +19,7 @@ public class MainMenuListAdapter extends ArrayAdapter<String> {
      * @param context Activity context
      */
     public MainMenuListAdapter(Context context) {
-        super(context, R.layout.item_stack);
+        super(context, R.layout.list_item_stack);
     }
 
     /**
@@ -46,7 +46,7 @@ public class MainMenuListAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_main, null);
+            convertView = inflater.inflate(R.layout.list_item_main, null);
         }
         String string = this.getItem(position);
 

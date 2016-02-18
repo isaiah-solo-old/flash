@@ -8,6 +8,9 @@
     <EditText
         android:id="@+id/edit_stack_name"
         android:hint="@string/literal_stacknamehint"
+        android:singleLine="true"
+        android:maxLength="@integer/max_stack_name_length"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

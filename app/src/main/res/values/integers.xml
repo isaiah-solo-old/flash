@@ -3,4 +3,6 @@
 <resources>
     <integer name="card_flip_time_full">300</integer>
     <integer name="card_flip_time_half">150</integer>
+    <integer name="max_stack_name_length">50</integer>
+    <integer name="max_notecard_side_length">200</integer>
 </resources>

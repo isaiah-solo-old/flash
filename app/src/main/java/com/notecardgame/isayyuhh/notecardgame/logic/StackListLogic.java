@@ -33,7 +33,7 @@ public class StackListLogic extends ListLogic {
         Stack stack = this.mCallback.stacksAt(position);
         Bundle b = new Bundle();
         Gson gson = new Gson();
-        b.putString("json", gson.toJson(stack));
+        b.putString(this.mCallback.getStr(R.string.bundle_json), gson.toJson(stack));
 
         NotecardListFragment newFragment = new NotecardListFragment();
         newFragment.setArguments(b);

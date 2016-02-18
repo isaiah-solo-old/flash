@@ -46,6 +46,13 @@ public interface ActivityCallback {
     String[] getStrArr (int id);
 
     /**
+     * Gets color from resources
+     * @param id Resource id
+     * @return
+     */
+    int getCol (int id);
+
+    /**
      * Adds stack to internal storage file
      * @param stack Stack to add
      */

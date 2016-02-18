@@ -8,12 +8,17 @@
     <EditText
         android:id="@+id/edit_notecard_front"
         android:hint="@string/literal_fronthint"
+        android:singleLine="true"
+        android:maxLength="@integer/max_notecard_side_length"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/edit_notecard_back"
         android:hint="@string/literal_backhint"
+        android:singleLine="true"
+        android:maxLength="@integer/max_notecard_side_length"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

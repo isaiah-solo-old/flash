@@ -43,10 +43,18 @@ public class NotecardListLogic extends ListLogic {
     @Override
     public void doLogic(int position, View view) {
         TextView tv = (TextView) view.findViewById(R.id.notecard_side);
+        TextView tvHint = (TextView) view.findViewById(R.id.notecard_hint);
         String text = tv.getText().toString();
         Stack stack = this.mCallback.findStack(stackName);
         String back = stack.at(position).getBack();
-        if (text.compareTo(back) == 0) tv.setText(stack.at(position).getFront());
-        else tv.setText(stack.at(position).getBack());
+        if (back.trim().length() < 1) return;
+        else if (text.compareTo(back) == 0) {
+            tv.setText(stack.at(position).getFront());
+            tvHint.setText(this.mCallback.getStr(R.string.literal_front));
+        }
+        else {
+            tv.setText(stack.at(position).getBack());
+            tvHint.setText(this.mCallback.getStr(R.string.literal_back));
+        }
     }
 }

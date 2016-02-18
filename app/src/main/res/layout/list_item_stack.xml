@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/activatedBackgroundIndicator"
+    android:padding="@dimen/standard_margin"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/stack_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dip"
-        android:layout_marginTop="20dip"
+        android:layout_margin="@dimen/list_item_margin"
         android:gravity="center_horizontal"
-        android:textSize="20sp" />
+        android:textColor="@color/colorAppText"
+        android:textSize="@dimen/text_size" />
 </LinearLayout>

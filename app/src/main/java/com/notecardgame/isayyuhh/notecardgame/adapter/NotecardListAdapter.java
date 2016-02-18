@@ -1,18 +1,25 @@
 package com.notecardgame.isayyuhh.notecardgame.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
+import com.notecardgame.isayyuhh.notecardgame.listener.IconClickListener;
+import com.notecardgame.isayyuhh.notecardgame.logic.EditNotecardIconLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
+
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/3/16.
@@ -33,7 +40,7 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
      * @param mCallback Reference to Activity
      */
     public NotecardListAdapter(Context context, ActivityCallback mCallback) {
-        super(context, R.layout.item_stack);
+        super(context, R.layout.list_item_stack);
         this.mCallback = mCallback;
         this.mSelectedItemsIds = new SparseBooleanArray();
     }
@@ -66,12 +73,23 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_notecard, null);
+            convertView = inflater.inflate(R.layout.list_item_notecard, null);
         }
         Notecard notecard = this.getItem(position);
 
         TextView notecardFront = (TextView) convertView.findViewById(R.id.notecard_side);
         notecardFront.setText(notecard.getFront());
+
+        TextView notecardHint = (TextView) convertView.findViewById(R.id.notecard_hint);
+        notecardHint.setText(this.mCallback.getStr(R.string.literal_front));
+
+        CardView cv = (CardView) convertView.findViewById(R.id.notecard);
+        cv.setCardBackgroundColor(this.mCallback.getCol(R.color.colorNotecard));
+
+        LinearLayout iv = (LinearLayout) convertView.findViewById(R.id.edit_notecard_icon);
+        EditNotecardIconLogic iconLogic = new EditNotecardIconLogic(this.mCallback, this.stackName,
+                notecard.getFront());
+        iv.setOnClickListener(new IconClickListener(iconLogic));
         return convertView;
     }
 

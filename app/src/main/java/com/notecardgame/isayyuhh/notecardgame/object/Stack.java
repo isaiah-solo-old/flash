@@ -48,21 +48,32 @@ public class Stack {
      * @param notecard Notecard to add to stack
      */
     public void addNotecard (Notecard notecard) {
-        this.notecards.add(notecard);
+        this.notecards.add(0, notecard);
     }
 
     /**
      * Removes a notecard from the stack
-     * @param notecard Notecard to remove from stack
+     * @param notecardFront Notecard to remove from stack
      */
-    public void removeNotecard (Notecard notecard) {
+    public void removeNotecard (String notecardFront) {
         for (Iterator<Notecard> iter = notecards.listIterator(); iter.hasNext();) {
             Notecard curr = iter.next();
-            if (curr.getFront().compareTo(notecard.getFront()) == 0) {
+            if (curr.getFront().compareTo(notecardFront) == 0) {
                 iter.remove();
                 break;
             }
         }
+    }
+
+    public Notecard find (String front) {
+        Notecard foundNotecard = null;
+        for (Notecard notecard: this.notecards) {
+            if (notecard.getFront().compareTo(front) == 0) {
+                foundNotecard = notecard;
+                break;
+            }
+        }
+        return foundNotecard;
     }
 
     /**

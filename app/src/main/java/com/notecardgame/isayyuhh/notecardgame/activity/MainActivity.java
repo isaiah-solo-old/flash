@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.fragment_list.MainMenuListFragment;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         this.updateStacks();
 
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorText));
+        this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorToolBarText));
 
         this.fm = getSupportFragmentManager();
         MainMenuListFragment newFragment = new MainMenuListFragment();
@@ -167,12 +169,22 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     }
 
     /**
+     * Gets color from resources
+     * @param id Resource id
+     * @return
+     */
+    @Override
+    public int getCol(int id) {
+        return this.getResources().getColor(id);
+    }
+
+    /**
      * Adds stack to internal storage file
      * @param stack Stack to add
      */
     @Override
     public void addStack(Stack stack) {
-        this.stacks.add(stack);
+        this.stacks.add(0, stack);
         this.update();
     }
 
@@ -197,8 +209,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     public Stack findStack(String name) {
         Stack foundStack = null;
         for (Stack stack: this.stacks) {
-            foundStack = stack;
-            if (name.compareTo(foundStack.getName()) == 0) break;
+            if (name.compareTo(stack.getName()) == 0) {
+                foundStack = stack;
+                break;
+            }
         }
         return foundStack;
     }
@@ -252,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     @Override
     public void removeNotecardFromStack(Notecard notecard, String name) {
         Stack stack = this.findStack(name);
-        stack.removeNotecard(notecard);
+        stack.removeNotecard(notecard.getFront());
 
         this.update();
     }

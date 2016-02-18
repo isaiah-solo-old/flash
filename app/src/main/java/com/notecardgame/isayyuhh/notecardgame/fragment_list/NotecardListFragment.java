@@ -15,7 +15,7 @@ import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
-import com.notecardgame.isayyuhh.notecardgame.listener.ItemClickListener;
+import com.notecardgame.isayyuhh.notecardgame.listener.ListItemClickListener;
 import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
 import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.logic.NotecardListLogic;
@@ -55,7 +55,7 @@ public class NotecardListFragment extends Fragment {
 
         Bundle b = this.getArguments();
         Gson gson = new Gson();
-        String json = b.getString("json");
+        String json = b.getString(this.mCallback.getStr(R.string.bundle_json));
 
         this.stack = gson.fromJson(json, Stack.class);
     }
@@ -70,13 +70,11 @@ public class NotecardListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate view, and set Toolbar and ListView
         this.currentView = inflater.inflate(R.layout.list_notecard, container, false);
         this.mCallback.setToolbarTitle(this.stack.getName() +
                 this.mCallback.getStr(R.string.title_notecards));
         setListView(currentView);
 
-        // FloatingActionButton
         FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(
                 R.id.fab_notecard);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +119,7 @@ public class NotecardListFragment extends Fragment {
         listView.setAdapter(adp);
         adp.setData(this.stack, listLogic);
 
-        listView.setOnItemClickListener(new ItemClickListener(listLogic));
+        listView.setOnItemClickListener(new ListItemClickListener(listLogic));
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(this.mCallback,
                 listView, adp));
