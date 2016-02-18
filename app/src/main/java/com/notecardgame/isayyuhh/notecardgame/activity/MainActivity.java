@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorToolBarText));
+        this.setSupportActionBar(mToolbar);
 
         this.fm = getSupportFragmentManager();
         MainMenuListFragment newFragment = new MainMenuListFragment();

@@ -52,8 +52,16 @@ public class Stack {
     }
 
     /**
+     * Adds a notecard to the stack
+     * @param notecard Notecard to add to stack
+     */
+    public void addNotecard (int position, Notecard notecard) {
+        this.notecards.add(position, notecard);
+    }
+
+    /**
      * Removes a notecard from the stack
-     * @param notecardFront Notecard to remove from stack
+     * @param notecardFront Front of notecard to remove from stack
      */
     public void removeNotecard (String notecardFront) {
         for (Iterator<Notecard> iter = notecards.listIterator(); iter.hasNext();) {
@@ -65,6 +73,11 @@ public class Stack {
         }
     }
 
+    /**
+     * Find notecard in stack
+     * @param front Front of notecard to find in stack
+     * @return
+     */
     public Notecard find (String front) {
         Notecard foundNotecard = null;
         for (Notecard notecard: this.notecards) {
@@ -92,6 +105,22 @@ public class Stack {
     public String getJson () {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    /**
+     * Get notecard position in stack
+     * @param front Front of notecard to find in stack
+     * @return
+     */
+    public int getNotecardPosition (String front) {
+        int position = -1;
+        for (int i = 0; i < notecards.size(); i++) {
+            if (notecards.get(i).getFront().compareTo(front) == 0) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     /**

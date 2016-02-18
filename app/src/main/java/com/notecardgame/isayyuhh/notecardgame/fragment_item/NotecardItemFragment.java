@@ -93,9 +93,10 @@ public class NotecardItemFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Stack stack = mCallback.findStack(stackName);
+                int position = stack.getNotecardPosition(notecard.getFront());
                 stack.removeNotecard(previous);
                 notecard.setFront(s.toString());
-                stack.addNotecard(notecard);
+                stack.addNotecard(position, notecard);
 
                 mCallback.update();
             }
@@ -114,9 +115,10 @@ public class NotecardItemFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Stack stack = mCallback.findStack(stackName);
+                int position = stack.getNotecardPosition(notecard.getFront());
                 stack.removeNotecard(notecard.getFront());
                 notecard.setBack(s.toString());
-                stack.addNotecard(notecard);
+                stack.addNotecard(position, notecard);
 
                 mCallback.update();
             }
