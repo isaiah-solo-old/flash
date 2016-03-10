@@ -1,49 +1,29 @@
 package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
-import com.notecardgame.isayyuhh.notecardgame.listener.ListItemClickListener;
-import com.notecardgame.isayyuhh.notecardgame.listener.NotecardMultiChoiceListener;
-import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
-import com.notecardgame.isayyuhh.notecardgame.logic.NotecardListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
  * Created by isayyuhh on 2/2/16.
  */
-public class NotecardListFragment extends Fragment {
+public class NotecardListFragment extends ListFragment {
 
     /**
      * Fields
      */
-    private final static int MY_REQUEST_CODE = 1;
     private Stack stack;
-    private NotecardListFragment nlf = this;
-    private ActivityCallback mCallback;
-    private View currentView;
-
-    /**
-     * On attach fragment to activity
-     * @param activity Activity to attach to
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mCallback = (ActivityCallback) activity;
-    }
 
     /**
      * On created fragment
@@ -53,9 +33,9 @@ public class NotecardListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle b = this.getArguments();
         Gson gson = new Gson();
-        String json = b.getString(this.mCallback.getStr(R.string.bundle_json));
+        Bundle b = this.getArguments();
+        String json = b.getString(this.ac.getStr(R.string.bundle_json));
 
         this.stack = gson.fromJson(json, Stack.class);
     }
@@ -68,15 +48,52 @@ public class NotecardListFragment extends Fragment {
      * @return Inflated view
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        this.currentView = inflater.inflate(R.layout.list_notecard, container, false);
-        this.mCallback.setToolbarTitle(this.stack.getName() +
-                this.mCallback.getStr(R.string.title_notecards));
-        setListView(currentView);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.view = inflater.inflate(R.layout.list_notecard, container, false);
+        this.ac.setToolbarTitle(this.stack.getName() + this.ac.getStr(R.string.title_notecards));
+        this.setListView();
+        this.setFab();
 
-        FloatingActionButton fab = (FloatingActionButton) currentView.findViewById(
-                R.id.fab_notecard);
+        return this.view;
+    }
+
+    /**
+     * Gathers data from dialog fragment
+     * @param requestCode Request code
+     * @param resultCode Result code
+     * @param data Activity intent
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        this.setListView();
+    }
+
+    /**
+     * Sets on-click listener and adapter to listview
+     */
+    @Override
+    protected void setListView() {
+        ListView listView = (ListView) this.view.findViewById(R.id.lv_notecard);
+
+        this.stack = this.ac.findStack(this.stack.getName());
+
+        NotecardListAdapter adp = new NotecardListAdapter(this.getActivity(), this.ac, listView);
+        listView.setAdapter(adp);
+        adp.setData(this.stack);
+
+        listView.setOnItemClickListener(new ListItemClickListener());
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(adp);
+    }
+
+    /**
+     * Sets floating action button
+     */
+    @Override
+    protected void setFab () {
+        final NotecardListFragment nlf = this;
+
+        FloatingActionButton fab = (FloatingActionButton) this.view.findViewById(R.id.fab_notecard);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,40 +105,29 @@ public class NotecardListFragment extends Fragment {
                 newFragment.setArguments(b);
 
                 newFragment.setTargetFragment(nlf, MY_REQUEST_CODE);
-                mCallback.setDialogFragment(newFragment);
+                ac.setDialogFragment(newFragment);
             }
         });
-        return this.currentView;
     }
 
     /**
-     * Gathers data from dialog fragment
-     * @param requestCode Request code
-     * @param resultCode Result code
-     * @param data Activity intent
+     * On item click
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        this.setListView(this.currentView);
-    }
+    protected void onClick(View view, int position) {
+        TextView tv = (TextView) view.findViewById(R.id.notecard_side);
+        TextView tvHint = (TextView) view.findViewById(R.id.notecard_hint);
+        String text = tv.getText().toString();
+        String back = this.stack.at(position).getBack();
 
-    /**
-     * Sets on-click listener and adapter to listview
-     * @param view Inflated view
-     */
-    private void setListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.lv_notecard);
-
-        this.stack = this.mCallback.findStack(this.stack.getName());
-        ListLogic listLogic = new NotecardListLogic(mCallback);
-
-        NotecardListAdapter adp = new NotecardListAdapter(getActivity(), this.mCallback);
-        listView.setAdapter(adp);
-        adp.setData(this.stack, listLogic);
-
-        listView.setOnItemClickListener(new ListItemClickListener(listLogic));
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new NotecardMultiChoiceListener(this.mCallback,
-                listView, adp));
+        if (back.trim().length() < 1) return;
+        else if (text.compareTo(back) == 0) {
+            tv.setText(this.stack.at(position).getFront());
+            tvHint.setText(this.ac.getStr(R.string.literal_front));
+        }
+        else {
+            tv.setText(this.stack.at(position).getBack());
+            tvHint.setText(this.ac.getStr(R.string.literal_back));
+        }
     }
 }

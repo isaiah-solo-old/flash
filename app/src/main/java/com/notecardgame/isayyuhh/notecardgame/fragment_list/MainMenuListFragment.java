@@ -1,38 +1,34 @@
 package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.adapter.MainMenuListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.listener.ListItemClickListener;
-import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
-import com.notecardgame.isayyuhh.notecardgame.logic.MainMenuListLogic;
 
 /**
  * Created by isayyuhh on 2/2/16.
  */
-public class MainMenuListFragment extends Fragment {
+public class MainMenuListFragment extends ListFragment {
 
     /**
      * Fields
      */
-    private ActivityCallback mCallback;
+    private String[] mainMenuArray;
 
     /**
-     * On attach fragment to activity
-     * @param activity Activity to attach to
+     * On created fragment
+     * @param savedInstanceState Reference to the saved instance state
      */
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mCallback = (ActivityCallback) activity;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.mainMenuArray = this.ac.getStrArr(R.array.menu_main);
     }
 
     /**
@@ -46,26 +42,50 @@ public class MainMenuListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate view, and set Toolbar and ListView
-        View view = inflater.inflate(R.layout.list_main, container, false);
-        this.mCallback.setToolbarTitle(this.mCallback.getStr(R.string.app_name));
-        setListView(view);
-        return view;
+        this.view = inflater.inflate(R.layout.list_main, container, false);
+        this.ac.setToolbarTitle(this.ac.getStr(R.string.app_name));
+        this.setListView();
+
+        return this.view;
     }
 
     /**
      * Sets on-click listener and adapter to listview
-     * @param view Inflated view
      */
-    private void setListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.lv_main);
+    @Override
+    protected void setListView() {
+        ListView listView = (ListView) this.view.findViewById(R.id.lv_main);
 
-        String[] array = this.mCallback.getStrArr(R.array.menu_main);
-        ListLogic listLogic = new MainMenuListLogic(mCallback);
-
-        MainMenuListAdapter adp = new MainMenuListAdapter(getActivity());
+        MainMenuListAdapter adp = new MainMenuListAdapter(this.getActivity());
         listView.setAdapter(adp);
-        adp.setData(array);
+        adp.setData(this.mainMenuArray);
 
-        listView.setOnItemClickListener(new ListItemClickListener(listLogic));
+        listView.setOnItemClickListener(new ListItemClickListener());
+    }
+
+    /**
+     * Sets floating action button
+     */
+    @Override
+    protected void setFab() {}
+
+    /**
+     * On item click
+     */
+    @Override
+    protected void onClick(View view, int position) {
+        switch (position) {
+            case 0:
+                this.ac.setListFragment(new StackListFragment());
+                break;
+            case 1:
+                Log.e("PASS", mainMenuArray[position]);
+                break;
+            case 2:
+                Log.e("PASS", mainMenuArray[position]);
+                break;
+            default:
+                Log.e("MAIN MENU ERROR", "invalid listview position");
+        }
     }
 }

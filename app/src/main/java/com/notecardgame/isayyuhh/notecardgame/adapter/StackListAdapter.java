@@ -2,15 +2,19 @@ package com.notecardgame.isayyuhh.notecardgame.adapter;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
-import com.notecardgame.isayyuhh.notecardgame.logic.ListLogic;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 import java.util.List;
@@ -18,37 +22,36 @@ import java.util.List;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class StackListAdapter extends ArrayAdapter<Stack> {
+public class StackListAdapter extends ArrayAdapter<Stack> implements AbsListView.MultiChoiceModeListener {
 
     /**
      * Fields
      */
     private SparseBooleanArray mSelectedItemsIds;
-    private ActivityCallback mCallback;
-    private ListLogic listLogic;
+    private ActivityCallback ac;
+    private ListView listView;
 
     /**
      * Adapter constructor
      * @param context Activity context
-     * @param mCallback Reference to Activity
+     * @param ac Reference to Activity
      */
-    public StackListAdapter(Context context, ActivityCallback mCallback) {
+    public StackListAdapter(Context context, ActivityCallback ac, ListView listView) {
         super(context, R.layout.list_item_stack);
-        this.mCallback = mCallback;
         this.mSelectedItemsIds = new SparseBooleanArray();
+        this.ac = ac;
+        this.listView = listView;
     }
 
     /**
      * Sets data to adapter
      * @param stacks Reference to stacks
-     * @param listLogic Adapter on-click logic
      */
-    public void setData(List<Stack> stacks, ListLogic listLogic) {
+    public void setData(List<Stack> stacks) {
         this.clear();
         for(Stack stack : stacks) {
             this.add(stack);
         }
-        this.listLogic = listLogic;
         this.notifyDataSetChanged();
     }
 
@@ -79,7 +82,7 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
     @Override
     public void remove(Stack stack) {
         super.remove(stack);
-        mCallback.deleteStack(stack.getName());
+        this.ac.deleteStack(stack.getName());
         this.notifyDataSetChanged();
     }
 
@@ -89,14 +92,6 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
      */
     public void toggleSelection(int position) {
         this.selectView(position, !mSelectedItemsIds.get(position));
-    }
-
-    /**
-     * Removes selections
-     */
-    public void removeSelection() {
-        this.mSelectedItemsIds = new SparseBooleanArray();
-        this.notifyDataSetChanged();
     }
 
     /**
@@ -118,5 +113,70 @@ public class StackListAdapter extends ArrayAdapter<Stack> {
      */
     public SparseBooleanArray getSelectedIds() {
         return this.mSelectedItemsIds;
+    }
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode,
+                                          int position, long id, boolean checked) {
+        final int checkedCount = listView.getCheckedItemCount();
+        mode.setTitle(checkedCount + this.ac.getStr(R.string.multi_amountselected));
+        this.toggleSelection(position);
+    }
+
+    /**
+     * On action mode item clicked
+     * @param mode Action mode
+     * @param item Action mode item
+     * @return If action mode item clicked
+     */
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                SparseBooleanArray selected = this.getSelectedIds();
+                for (int i = (selected.size() - 1); i >= 0; i--) {
+                    if (selected.valueAt(i)) {
+                        Stack selecteditem = this.getItem(selected.keyAt(i));
+                        this.remove(selecteditem);
+                    }
+                }
+                mode.finish();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * On action mode created
+     * @param mode Action mode
+     * @param menu Action mode menu
+     * @return If action mode is created
+     */
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.getMenuInflater().inflate(R.menu.menu_select, menu);
+        return true;
+    }
+
+    /**
+     * On action mode destroyed
+     * @param mode Action mode
+     */
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        this.mSelectedItemsIds = new SparseBooleanArray();
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * On action mode prepared
+     * @param mode Action mode
+     * @param menu Action mode menu
+     * @return If action mode is prepared
+     */
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
     }
 }

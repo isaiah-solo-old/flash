@@ -53,6 +53,7 @@ public class Stack {
 
     /**
      * Adds a notecard to the stack
+     * @param position Position to insert notecard
      * @param notecard Notecard to add to stack
      */
     public void addNotecard (int position, Notecard notecard) {
@@ -61,12 +62,12 @@ public class Stack {
 
     /**
      * Removes a notecard from the stack
-     * @param notecardFront Front of notecard to remove from stack
+     * @param front Front of notecard to remove from stack
      */
-    public void removeNotecard (String notecardFront) {
+    public void removeNotecard (String front) {
         for (Iterator<Notecard> iter = notecards.listIterator(); iter.hasNext();) {
             Notecard curr = iter.next();
-            if (curr.getFront().compareTo(notecardFront) == 0) {
+            if (curr.getFront().compareTo(front) == 0) {
                 iter.remove();
                 break;
             }

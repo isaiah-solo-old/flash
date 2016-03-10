@@ -4,40 +4,19 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class AddStackDialogFragment extends DialogFragment {
-
-    /**
-     * Fields
-     */
-    private ActivityCallback mCallback;
-
-    /**
-     * Default Constructor
-     */
-    public AddStackDialogFragment() {}
-
-    /**
-     * On attach fragment to activity
-     * @param activity Activity to attach to
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mCallback = (ActivityCallback) activity;
-    }
+public class AddStackDialogFragment extends AddDialogFragment {
 
     /**
      * On created dialog
@@ -48,8 +27,8 @@ public class AddStackDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_new_stack, null))
-                .setTitle(getActivity().getResources().getString(R.string.literal_addstack))
-                .setPositiveButton(this.mCallback.getStr(R.string.literal_positive),
+                .setTitle(getActivity().getResources().getString(R.string.dialog_addstack))
+                .setPositiveButton(this.ac.getStr(R.string.dialog_positive),
                         new DialogInterface.OnClickListener() {
 
                     @Override
@@ -57,23 +36,25 @@ public class AddStackDialogFragment extends DialogFragment {
                         EditText et = (EditText) getDialog().findViewById(R.id.edit_stack_name);
                         String text = et.getText().toString();
                         if (text.trim().length() < 1) {
-                            Toast.makeText(getActivity(), "Enter stack name",
+                            Toast.makeText(getActivity(),
+                                    ac.getStr(R.string.dialog_error_missingname),
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        else if (mCallback.findStack(text) != null) {
-                            Toast.makeText(getActivity(), "Stack name already exists",
+                        else if (ac.findStack(text) != null) {
+                            Toast.makeText(getActivity(),
+                                    ac.getStr(R.string.dialog_error_existstack),
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
                         Stack stack = new Stack(text);
-                        mCallback.addStack(stack);
+                        ac.addStack(stack);
                         getTargetFragment().onActivityResult(getTargetRequestCode(),
                                 Activity.RESULT_OK, getActivity().getIntent());
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(this.mCallback.getStr(R.string.literal_negative),
+                .setNegativeButton(this.ac.getStr(R.string.dialog_negative),
                         new DialogInterface.OnClickListener() {
 
                     @Override

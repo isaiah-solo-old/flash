@@ -2,7 +2,6 @@ package com.notecardgame.isayyuhh.notecardgame.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,10 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
+import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment_item.ItemFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment_list.ListFragment;
 import com.notecardgame.isayyuhh.notecardgame.fragment_list.MainMenuListFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     /**
      * Fields
      */
-    private FragmentManager fm;
+    private boolean init;
     private Toolbar mToolbar;
+    private FragmentManager fm;
     private List<Stack> stacks;
-    private boolean init = false;
 
     /**
      * On created activity
@@ -48,25 +48,27 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
 
-        initialize();
+        this.initialize();
     }
 
     /**
      * Initializes variables
      */
     private void initialize() {
+        this.init = true;
+
         this.updateStacks();
+
 
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorToolBarText));
         this.setSupportActionBar(mToolbar);
 
         this.fm = getSupportFragmentManager();
-        MainMenuListFragment newFragment = new MainMenuListFragment();
-
-        this.setFragment(newFragment);
+        MainMenuListFragment fragment = new MainMenuListFragment();
+        this.setListFragment(fragment);
     }
 
     /**
@@ -94,13 +96,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     private void updateStacks() {
         this.stacks = new ArrayList<>();
         String filename = getResources().getString(R.string.filename_stacks);
+        Gson gson = new Gson();
 
         try {
             FileInputStream fis = this.openFileInput(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             String line;
             while ((line = br.readLine()) != null) {
-                Gson gson = new Gson();
                 Stack stack = gson.fromJson(line, Stack.class);
 
                 this.stacks.add(stack);
@@ -117,11 +119,20 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param fragment Fragment to transition to
      */
     @Override
-    public void setFragment(Fragment fragment) {
+    public void setListFragment(ListFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         ft.replace(R.id.fragment, fragment);
-        if (this.init) ft.addToBackStack(null);
-        else this.init = true;
+        if (! this.init) ft.addToBackStack(null);
+        else this.init = false;
+        ft.commit();
+    }
+
+    @Override
+    public void setItemFragment(ItemFragment fragment) {
+        FragmentTransaction ft = this.fm.beginTransaction();
+        ft.replace(R.id.fragment, fragment);
+        if (! this.init) ft.addToBackStack(null);
+        else this.init = false;
         ft.commit();
     }
 
@@ -130,12 +141,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param fragment Dialog fragment to transition to
      */
     @Override
-    public void setDialogFragment(DialogFragment fragment) {
+    public void setDialogFragment(AddDialogFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         Fragment prev = this.fm.findFragmentByTag(this.getStr(R.string.tag_dialog));
-        if (prev != null) {
-            ft.remove(prev);
-        }
+        if (prev != null) ft.remove(prev);
         ft.addToBackStack(null);
         fragment.show(ft, this.getStr(R.string.tag_dialog));
     }
@@ -270,5 +279,23 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         stack.removeNotecard(notecard.getFront());
 
         this.update();
+    }
+
+    /**
+     * Find notecard given stack name and front of notecard
+     * @param stackName Name of stack
+     * @param notecardFront Front of notecard
+     * @return
+     */
+    @Override
+    public Notecard findNotecardInStack(String stackName, String notecardFront) {
+        Notecard foundNotecard = null;
+        for (Stack stack: this.stacks) {
+            if (stackName.compareTo(stack.getName()) == 0) {
+                foundNotecard = stack.find(notecardFront);
+                break;
+            }
+        }
+        return foundNotecard;
     }
 }
