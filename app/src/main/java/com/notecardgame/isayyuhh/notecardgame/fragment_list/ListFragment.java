@@ -9,14 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
  * Created by isayyuhh on 2/2/16.

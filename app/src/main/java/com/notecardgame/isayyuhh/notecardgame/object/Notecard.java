@@ -13,43 +13,48 @@ public class Notecard extends Paper {
 
     /**
      * Constructor specifying front and back
+     *
      * @param front Text on front of notecard
-     * @param back Text on back of notecard
+     * @param back  Text on back of notecard
      */
-    public Notecard (String front, String back) {
+    public Notecard(String front, String back) {
         this.front = front;
         this.back = back;
     }
 
     /**
      * Gets the front of the notecard
+     *
      * @return Front of notecard
      */
-    public String getFront () {
+    public String getFront() {
         return this.front;
     }
 
     /**
      * Gets the back of the notecard
+     *
      * @return Back of notecard
      */
-    public String getBack () {
+    public String getBack() {
         return this.back;
     }
 
     /**
      * Sets front of notecard
+     *
      * @param front New front string
      */
-    public void setFront (String front) {
+    public void setFront(String front) {
         this.front = front;
     }
 
     /**
      * Sets back of notecard
+     *
      * @param back New back string
      */
-    public void setBack (String back) {
+    public void setBack(String back) {
         this.back = back;
     }
 }
