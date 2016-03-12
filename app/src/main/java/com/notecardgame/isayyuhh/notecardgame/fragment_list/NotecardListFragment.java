@@ -34,6 +34,7 @@ public class NotecardListFragment extends ListFragment {
 
     /**
      * On created fragment
+     *
      * @param savedInstanceState Reference to the saved instance state
      */
     @Override
@@ -49,8 +50,9 @@ public class NotecardListFragment extends ListFragment {
 
     /**
      * On created view
-     * @param inflater View inflater
-     * @param container Reference to viewgroup
+     *
+     * @param inflater           View inflater
+     * @param container          Reference to viewgroup
      * @param savedInstanceState Reference to the saved instance state
      * @return Inflated view
      */
@@ -66,9 +68,10 @@ public class NotecardListFragment extends ListFragment {
 
     /**
      * Gathers data from dialog fragment
+     *
      * @param requestCode Request code
-     * @param resultCode Result code
-     * @param data Activity intent
+     * @param resultCode  Result code
+     * @param data        Activity intent
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,7 +91,7 @@ public class NotecardListFragment extends ListFragment {
         listView.setAdapter(adp);
 
         List<Paper> notecards = new ArrayList<>();
-        for (Notecard notecard: this.stack.getNotecards()) notecards.add(notecard);
+        for (Notecard notecard : this.stack.getNotecards()) notecards.add(notecard);
         adp.setData(notecards);
         adp.setStackName(this.stack.getName());
 
@@ -102,7 +105,7 @@ public class NotecardListFragment extends ListFragment {
      * Sets floating action button
      */
     @Override
-    protected void setFab () {
+    protected void setFab() {
         final NotecardListFragment nlf = this;
 
         FloatingActionButton fab = (FloatingActionButton) this.view.findViewById(R.id.fab_notecard);
@@ -136,8 +139,7 @@ public class NotecardListFragment extends ListFragment {
         else if (text.compareTo(back) == 0) {
             tv.setText(this.stack.at(position).getFront());
             tvHint.setText(this.ac.getStr(R.string.literal_front));
-        }
-        else {
+        } else {
             tv.setText(this.stack.at(position).getBack());
             tvHint.setText(this.ac.getStr(R.string.literal_back));
         }
@@ -154,7 +156,7 @@ public class NotecardListFragment extends ListFragment {
     protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
         this.stack.swapNotecards(positionOne, positionTwo);
         List<Paper> notecards = new ArrayList<>();
-        for (Notecard notecard: this.stack.getNotecards()) notecards.add(notecard);
+        for (Notecard notecard : this.stack.getNotecards()) notecards.add(notecard);
         adp.setData(notecards);
     }
 

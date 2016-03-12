@@ -29,6 +29,7 @@ public class MainMenuListFragment extends ListFragment {
 
     /**
      * On created fragment
+     *
      * @param savedInstanceState Reference to the saved instance state
      */
     @Override
@@ -37,13 +38,14 @@ public class MainMenuListFragment extends ListFragment {
 
         String[] stringArray = this.ac.getStrArr(R.array.menu_main);
         this.mainMenuArray = new ArrayList<>();
-        for (String string: stringArray) this.mainMenuArray.add(new Note(string));
+        for (String string : stringArray) this.mainMenuArray.add(new Note(string));
     }
 
     /**
      * On created view
-     * @param inflater View inflater
-     * @param container Reference to viewgroup
+     *
+     * @param inflater           View inflater
+     * @param container          Reference to viewgroup
      * @param savedInstanceState Reference to the saved instance state
      * @return Inflated view
      */
@@ -77,7 +79,8 @@ public class MainMenuListFragment extends ListFragment {
      * Sets floating action button
      */
     @Override
-    protected void setFab() {}
+    protected void setFab() {
+    }
 
     /**
      * On item click

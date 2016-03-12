@@ -66,7 +66,7 @@ public class StackListFragment extends ListFragment {
         StackListAdapter adp = new StackListAdapter(getActivity(), this.ac);
         listView.setAdapter(adp);
         List<Paper> stacks = new ArrayList<>();
-        for (Stack stack: this.ac.getStacks()) stacks.add(stack);
+        for (Stack stack : this.ac.getStacks()) stacks.add(stack);
         adp.setData(stacks);
 
         ListItemListener listener = new ListItemListener(adp, listView);
@@ -121,7 +121,7 @@ public class StackListFragment extends ListFragment {
     protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
         this.ac.swapStacks(positionOne, positionTwo);
         List<Paper> stacks = new ArrayList<>();
-        for (Stack stack: this.ac.getStacks()) stacks.add(stack);
+        for (Stack stack : this.ac.getStacks()) stacks.add(stack);
         adp.setData(stacks);
     }
 

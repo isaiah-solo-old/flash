@@ -42,7 +42,7 @@ public abstract class ListFragment extends Fragment {
     }
 
     /**
-     * Sets on-click listener and adapter to listview
+     * Sets on-click listener and adapter to list view
      */
     protected abstract void setListView();
 
