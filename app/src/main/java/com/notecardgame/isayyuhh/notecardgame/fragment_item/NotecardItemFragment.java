@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -74,19 +73,21 @@ public class NotecardItemFragment extends ItemFragment {
 
     /**
      * When options menu is created
-     * @param menu Menu to inflate in
+     *
+     * @param menu     Menu to inflate in
      * @param inflater Inflates menu
      */
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_notecard, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
      * Handles item events
+     *
      * @param item Item to handle
-     * @return
+     * @return If option item is selected
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

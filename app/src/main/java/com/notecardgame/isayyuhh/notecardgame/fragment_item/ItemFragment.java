@@ -18,6 +18,7 @@ public abstract class ItemFragment extends Fragment {
 
     /**
      * On attach fragment to activity
+     *
      * @param activity Activity to attach to
      */
     @Override
@@ -28,6 +29,7 @@ public abstract class ItemFragment extends Fragment {
 
     /**
      * Sets on-click listener and adapter to listview
+     *
      * @param view Inflated view
      */
     protected abstract void setItemView(View view);
