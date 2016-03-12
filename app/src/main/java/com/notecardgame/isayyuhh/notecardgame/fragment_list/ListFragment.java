@@ -54,6 +54,15 @@ public abstract class ListFragment extends Fragment {
     protected abstract void onClick(View view, int position);
 
     /**
+     * On multi edit
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
+    protected abstract void onEdit(SparseBooleanArray selected, int position, ListAdapter adp);
+
+    /**
      * On multi swap
      *
      * @param positionOne Position of first element
@@ -119,8 +128,10 @@ public abstract class ListFragment extends Fragment {
                                               boolean checked) {
             final int checkedCount = listView.getCheckedItemCount();
 
-            if (checkedCount != 2) mode.getMenu().findItem(R.id.swap).setVisible(false);
-            else mode.getMenu().findItem(R.id.swap).setVisible(true);
+            if (checkedCount == 1) mode.getMenu().findItem(R.id.edit).setVisible(true);
+            else mode.getMenu().findItem(R.id.edit).setVisible(false);
+            if (checkedCount == 2) mode.getMenu().findItem(R.id.swap).setVisible(true);
+            else mode.getMenu().findItem(R.id.swap).setVisible(false);
             ac.updateMenu();
 
             mode.setTitle(checkedCount + ac.getStr(R.string.multi_amountselected));
@@ -164,6 +175,14 @@ public abstract class ListFragment extends Fragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             SparseBooleanArray selected = this.mSelectedItemsIds;
             switch (item.getItemId()) {
+                case R.id.edit:
+                    for (int i = (selected.size() - 1); i >= 0; i--) {
+                        if (selected.valueAt(i)) {
+                            onEdit(selected, i, this.adp);
+                        }
+                    }
+                    mode.finish();
+                    return true;
                 case R.id.swap:
                     int positionOne = -1, positionTwo = -1;
                     for (int i = (selected.size() - 1); i >= 0; i--) {

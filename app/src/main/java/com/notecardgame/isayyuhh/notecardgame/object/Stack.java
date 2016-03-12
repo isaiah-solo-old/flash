@@ -38,6 +38,14 @@ public class Stack extends Paper {
     }
 
     /**
+     * Change name of the stack
+     * @param name New name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Gets the size of the stack
      *
      * @return Amount of notecards in the stack
@@ -115,23 +123,6 @@ public class Stack extends Paper {
     public String getJson() {
         Gson gson = new Gson();
         return gson.toJson(this);
-    }
-
-    /**
-     * Get notecard position in stack
-     *
-     * @param front Front of notecard to find in stack
-     * @return
-     */
-    public int getNotecardPosition(String front) {
-        int position = -1;
-        for (int i = 0; i < notecards.size(); i++) {
-            if (notecards.get(i).getFront().compareTo(front) == 0) {
-                position = i;
-                break;
-            }
-        }
-        return position;
     }
 
     /**

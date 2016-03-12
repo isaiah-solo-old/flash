@@ -15,6 +15,7 @@ import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment_item.NotecardItemFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
@@ -143,6 +144,26 @@ public class NotecardListFragment extends ListFragment {
             tv.setText(this.stack.at(position).getBack());
             tvHint.setText(this.ac.getStr(R.string.literal_back));
         }
+    }
+
+    /**
+     * On multi edit
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
+    @Override
+    protected void onEdit(SparseBooleanArray selected, int position, ListAdapter adp) {
+        String front = this.stack.at(position).getFront();
+
+        Bundle b = new Bundle();
+        b.putString(this.ac.getStr(R.string.bundle_name), this.stack.getName());
+        b.putString(this.ac.getStr(R.string.bundle_json), front);
+
+        NotecardItemFragment fragment = new NotecardItemFragment();
+        fragment.setArguments(b);
+        this.ac.setItemFragment(fragment);
     }
 
     /**

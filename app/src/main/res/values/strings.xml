@@ -22,6 +22,7 @@
     <string name="dialog_negative">Cancel</string>
     <string name="dialog_addstack">Create new Stack:</string>
     <string name="dialog_addnotecard">Create new Notecard:</string>
+    <string name="dialog_editstack">Change Stack name:</string>
     <string name="dialog_stacknamehint">Name</string>
     <string name="dialog_fronthint">Front</string>
     <string name="dialog_backhint">Back (Optional)</string>
@@ -35,6 +36,7 @@
     <!-- Multiselect Strings -->
     <string name="multi_deleteselection">Delete</string>
     <string name="multi_swapselection">Swap</string>
+    <string name="multi_editselection">Edit</string>
     <string name="multi_amountselected">\u0020Selected</string>
 
     <!-- Literal Strings -->

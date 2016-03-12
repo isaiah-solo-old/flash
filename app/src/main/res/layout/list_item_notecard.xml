@@ -20,20 +20,6 @@
             android:layout_height="match_parent"
             android:padding="@dimen/standard_margin">
 
-            <LinearLayout
-                android:id="@+id/edit_notecard_icon"
-                android:layout_width="@dimen/edit_icon_size"
-                android:layout_height="@dimen/edit_icon_size"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/standard_margin"
-                    android:src="@android:drawable/ic_menu_edit" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/notecard_side"
                 android:layout_width="wrap_content"

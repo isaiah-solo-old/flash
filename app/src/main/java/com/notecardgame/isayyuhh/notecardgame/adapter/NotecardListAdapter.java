@@ -65,9 +65,6 @@ public class NotecardListAdapter extends ListAdapter {
 
         CardView cv = (CardView) convertView.findViewById(R.id.notecard);
         cv.setCardBackgroundColor(this.ac.getCol(R.color.colorNotecard));
-
-        LinearLayout iv = (LinearLayout) convertView.findViewById(R.id.edit_notecard_icon);
-        iv.setOnClickListener(new IconClickListener(notecard.getFront()));
         return convertView;
     }
 
@@ -81,41 +78,5 @@ public class NotecardListAdapter extends ListAdapter {
         super.remove(notecard);
         this.ac.removeNotecardFromStack((Notecard) notecard, this.stackName);
         this.notifyDataSetChanged();
-    }
-
-    /**
-     * Icon click listener
-     */
-    private class IconClickListener implements LinearLayout.OnClickListener {
-
-        /**
-         * Fields
-         */
-        private String notecardFront;
-
-        /**
-         * On-click listener constructor
-         *
-         * @param notecardFront String on front of notecard
-         */
-        public IconClickListener(String notecardFront) {
-            this.notecardFront = notecardFront;
-        }
-
-        /**
-         * Uses logic on on-item click
-         *
-         * @param v View
-         */
-        @Override
-        public void onClick(View v) {
-            Bundle b = new Bundle();
-            b.putString(ac.getStr(R.string.bundle_name), stackName);
-            b.putString(ac.getStr(R.string.bundle_json), this.notecardFront);
-
-            NotecardItemFragment newFragment = new NotecardItemFragment();
-            newFragment.setArguments(b);
-            ac.setItemFragment(newFragment);
-        }
     }
 }

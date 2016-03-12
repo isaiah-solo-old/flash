@@ -103,6 +103,17 @@ public class MainMenuListFragment extends ListFragment {
     }
 
     /**
+     * On multi edit
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
+    @Override
+    protected void onEdit(SparseBooleanArray selected, int position, ListAdapter adp) {
+    }
+
+    /**
      * On multi swap
      *
      * @param positionOne Position of first element
