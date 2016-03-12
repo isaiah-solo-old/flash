@@ -52,15 +52,6 @@ public class Stack {
     }
 
     /**
-     * Adds a notecard to the stack
-     * @param position Position to insert notecard
-     * @param notecard Notecard to add to stack
-     */
-    public void addNotecard (int position, Notecard notecard) {
-        this.notecards.add(position, notecard);
-    }
-
-    /**
      * Removes a notecard from the stack
      * @param front Front of notecard to remove from stack
      */

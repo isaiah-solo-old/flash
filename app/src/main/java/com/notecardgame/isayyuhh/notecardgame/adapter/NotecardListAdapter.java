@@ -25,7 +25,8 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class NotecardListAdapter extends ArrayAdapter<Notecard> implements AbsListView.MultiChoiceModeListener {
+public class NotecardListAdapter extends ArrayAdapter<Notecard>
+        implements AbsListView.MultiChoiceModeListener {
 
     /**
      * Fields
@@ -100,6 +101,7 @@ public class NotecardListAdapter extends ArrayAdapter<Notecard> implements AbsLi
         this.ac.removeNotecardFromStack(notecard, this.stackName);
         this.notifyDataSetChanged();
     }
+
 
     /**
      * Selects view from selections

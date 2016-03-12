@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param savedInstanceState Reference to the saved instance state
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         this.init = true;
 
         this.updateStacks();
-
 
         this.mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
         this.mToolbar.setTitleTextColor(this.getResources().getColor(R.color.colorToolBarText));
@@ -147,6 +148,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         if (prev != null) ft.remove(prev);
         ft.addToBackStack(null);
         fragment.show(ft, this.getStr(R.string.tag_dialog));
+    }
+
+    /**
+     * Pop fragment
+     */
+    @Override
+    public void popFragment() {
+        this.fm.popBackStack();
     }
 
     /**

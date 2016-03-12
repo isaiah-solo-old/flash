@@ -1,5 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.activity;
 
+import android.view.Menu;
+
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.fragment_item.ItemFragment;
 import com.notecardgame.isayyuhh.notecardgame.fragment_list.ListFragment;
@@ -30,6 +32,11 @@ public interface ActivityCallback {
      * @param fragment Dialog fragment to transition to
      */
     void setDialogFragment (AddDialogFragment fragment);
+
+    /**
+     * Pop fragment
+     */
+    void popFragment ();
 
     /**
      * Sets toolbar title to desired string
@@ -108,6 +115,8 @@ public interface ActivityCallback {
      * @param name Name of stack to delete from
      */
     void removeNotecardFromStack (Notecard notecard, String name);
+
+    //void swapNotecardsInStack ();
 
     /**
      * Find notecard given stack name and front of notecard

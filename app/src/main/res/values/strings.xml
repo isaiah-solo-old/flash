@@ -39,6 +39,7 @@
     <!-- Literal Strings -->
     <string name="literal_newline">\n</string>
     <string name="literal_settings">Settings</string>
+    <string name="literal_save">Save</string>
     <string name="literal_front">Front</string>
     <string name="literal_back">Back</string>
 

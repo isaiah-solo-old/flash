@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,8 +26,11 @@ public class NotecardItemFragment extends ItemFragment {
     /**
      * Fields
      */
-    private Stack stack;
-    private Notecard notecard;
+    private String currentStackName;
+    private String currentNotecardFront;
+    private String currentNotecardBack;
+    private String newFront;
+    private String newBack;
 
     /**
      * On created fragment
@@ -34,9 +41,17 @@ public class NotecardItemFragment extends ItemFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.setHasOptionsMenu(true);
+
         Bundle b = this.getArguments();
-        this.stack = this.ac.findStack(b.getString(this.ac.getStr(R.string.bundle_name)));
-        this.notecard = this.stack.find(b.getString(this.ac.getStr(R.string.bundle_json)));
+        this.currentStackName = b.getString(this.ac.getStr(R.string.bundle_name));
+        Stack stack = this.ac.findStack(this.currentStackName);
+        this.currentNotecardFront = b.getString(this.ac.getStr(R.string.bundle_json));
+        Notecard notecard = stack.find(this.currentNotecardFront);
+        this.currentNotecardBack = notecard.getBack();
+
+        this.newFront = this.currentNotecardFront;
+        this.newBack = this.currentNotecardBack;
     }
 
     /**
@@ -58,50 +73,68 @@ public class NotecardItemFragment extends ItemFragment {
     }
 
     /**
+     * When options menu is created
+     * @param menu Menu to inflate in
+     * @param inflater Inflates menu
+     */
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_notecard, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     * Handles item events
+     * @param item Item to handle
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (this.currentNotecardFront.compareTo(this.newFront) != 0 ||
+                this.currentNotecardBack.compareTo(this.newBack) != 0) {
+            Notecard notecard = this.ac.findNotecardInStack(this.currentStackName,
+                    this.currentNotecardFront);
+            Notecard newNotecard = new Notecard(this.newFront, this.newBack);
+
+            this.ac.removeNotecardFromStack(notecard, this.currentStackName);
+            this.ac.addNotecardToStack(newNotecard, this.currentStackName);
+        }
+        this.ac.popFragment();
+        return true;
+    }
+
+    /**
      * Sets on-click listener and adapter to listview
      *
      * @param view Inflated view
      */
     protected void setItemView(View view) {
-        EditText notecardFront = (EditText) view.findViewById(R.id.notecard_front_text);
-        notecardFront.setText(notecard.getFront());
-        notecardFront.addTextChangedListener(new TextWatcher() {
-            private String previous;
-
+        final EditText editFront = (EditText) view.findViewById(R.id.notecard_front_text);
+        editFront.setText(currentNotecardFront);
+        editFront.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                this.previous = notecard.getFront();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int position = stack.getNotecardPosition(notecard.getFront());
-                stack.removeNotecard(previous);
-                notecard.setFront(s.toString());
-                stack.addNotecard(position, notecard);
-
-                ac.update();
+                newFront = s.toString();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-        EditText notecardBack = (EditText) view.findViewById(R.id.notecard_back_text);
-        notecardBack.setText(notecard.getBack());
-        notecardBack.addTextChangedListener(new TextWatcher() {
+        EditText editBack = (EditText) view.findViewById(R.id.notecard_back_text);
+        editBack.setText(currentNotecardBack);
+        editBack.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int position = stack.getNotecardPosition(notecard.getFront());
-                stack.removeNotecard(notecard.getFront());
-                notecard.setBack(s.toString());
-                stack.addNotecard(position, notecard);
-
-                ac.update();
+                newBack = s.toString();
             }
 
             @Override
