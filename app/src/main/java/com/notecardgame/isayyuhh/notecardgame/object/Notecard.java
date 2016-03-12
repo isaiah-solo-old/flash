@@ -3,7 +3,7 @@ package com.notecardgame.isayyuhh.notecardgame.object;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class Notecard {
+public class Notecard extends Paper {
 
     /**
      * Fields

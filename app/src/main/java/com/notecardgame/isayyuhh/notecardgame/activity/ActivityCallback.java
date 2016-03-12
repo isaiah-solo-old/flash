@@ -45,6 +45,11 @@ public interface ActivityCallback {
     void setToolbarTitle (String title);
 
     /**
+     * Updates action menu
+     */
+    void updateMenu ();
+
+    /**
      * Gets string from resources
      * @param id Resource id
      * @return String from resources
@@ -78,6 +83,13 @@ public interface ActivityCallback {
     void deleteStack (String name);
 
     /**
+     * Swaps position of stacks
+     * @param positionOne Position of first stack
+     * @param positionTwo Position of second stack
+     */
+    void swapStacks (int positionOne, int positionTwo);
+
+    /**
      * Searches for stack in reference of stacks
      * @param name Name of stack to search for
      * @return Stack found
@@ -107,7 +119,7 @@ public interface ActivityCallback {
      * @param notecard Notecard to add to stack
      * @param name Name of stack to add to
      */
-    void addNotecardToStack (Notecard notecard, String name);
+    void addNotecardToStack (Notecard notecard, String name, int position);
 
     /**
      * Deletes notecard from given stack
@@ -115,8 +127,6 @@ public interface ActivityCallback {
      * @param name Name of stack to delete from
      */
     void removeNotecardFromStack (Notecard notecard, String name);
-
-    //void swapNotecardsInStack ();
 
     /**
      * Find notecard given stack name and front of notecard

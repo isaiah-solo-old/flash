@@ -33,7 +33,8 @@
     <string name="dialog_error_existnotecard">Notecard already exists</string>
 
     <!-- Multiselect Strings -->
-    <string name="multi_deleteselection">Delete</string>>
+    <string name="multi_deleteselection">Delete</string>
+    <string name="multi_swapselection">Swap</string>
     <string name="multi_amountselected">\u0020Selected</string>
 
     <!-- Literal Strings -->

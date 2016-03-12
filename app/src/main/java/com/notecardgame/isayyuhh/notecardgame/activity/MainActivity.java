@@ -167,6 +167,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         this.mToolbar.setTitle(title);
     }
 
+    @Override
+    public void updateMenu() {
+        this.invalidateOptionsMenu();
+    }
+
     /**
      * Gets string from resources
      * @param id Resource id
@@ -215,6 +220,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     public void deleteStack(String name) {
         Stack stack = this.findStack(name);
         if (stack != null) this.stacks.remove(stack);
+
+        this.update();
+    }
+
+    @Override
+    public void swapStacks(int positionOne, int positionTwo) {
+        Collections.swap(this.stacks, positionOne, positionTwo);
 
         this.update();
     }
@@ -270,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param name Name of stack to add to
      */
     @Override
-    public void addNotecardToStack(Notecard notecard, String name) {
+    public void addNotecardToStack(Notecard notecard, String name, int position) {
         Stack stack = this.findStack(name);
         stack.addNotecard(notecard);
 

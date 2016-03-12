@@ -3,6 +3,7 @@ package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,14 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddStackDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/2/16.
@@ -21,8 +27,9 @@ public class StackListFragment extends ListFragment {
 
     /**
      * On created view
-     * @param inflater View inflater
-     * @param container Reference to viewgroup
+     *
+     * @param inflater           View inflater
+     * @param container          Reference to viewgroup
      * @param savedInstanceState Reference to the saved instance state
      * @return Inflated view
      */
@@ -39,9 +46,10 @@ public class StackListFragment extends ListFragment {
 
     /**
      * Gathers data from dialog fragment
+     *
      * @param requestCode Request code
-     * @param resultCode Result code
-     * @param data Activity intent
+     * @param resultCode  Result code
+     * @param data        Activity intent
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -55,20 +63,23 @@ public class StackListFragment extends ListFragment {
     protected void setListView() {
         ListView listView = (ListView) this.view.findViewById(R.id.lv_stack);
 
-        StackListAdapter adp = new StackListAdapter(getActivity(), ac, listView);
+        StackListAdapter adp = new StackListAdapter(getActivity(), ac);
         listView.setAdapter(adp);
-        adp.setData(this.ac.getStacks());
+        List<Paper> stacks = new ArrayList<>();
+        for (Stack stack: this.ac.getStacks()) stacks.add(stack);
+        adp.setData(stacks);
 
-        listView.setOnItemClickListener(new ListItemClickListener());
+        ListItemClickListener listener = new ListItemClickListener(adp, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(adp);
+        listView.setOnItemClickListener(listener);
+        listView.setMultiChoiceModeListener(listener);
     }
 
     /**
      * Sets floating action button
      */
     @Override
-    protected void setFab () {
+    protected void setFab() {
         final StackListFragment slf = this;
 
         FloatingActionButton fab = (FloatingActionButton) this.view.findViewById(R.id.fab_stack);
@@ -97,5 +108,19 @@ public class StackListFragment extends ListFragment {
         NotecardListFragment fragment = new NotecardListFragment();
         fragment.setArguments(b);
         ac.setListFragment(fragment);
+    }
+
+    @Override
+    protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
+        this.ac.swapStacks(positionOne, positionTwo);
+        List<Paper> stacks = new ArrayList<>();
+        for (Stack stack: this.ac.getStacks()) stacks.add(stack);
+        adp.setData(stacks);
+    }
+
+    @Override
+    protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
+        Stack selecteditem = (Stack) adp.getItem(selected.keyAt(position));
+        adp.remove(selecteditem);
     }
 }

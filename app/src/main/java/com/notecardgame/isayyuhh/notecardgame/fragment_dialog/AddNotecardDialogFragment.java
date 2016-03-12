@@ -68,7 +68,7 @@ public class AddNotecardDialogFragment extends AddDialogFragment {
                                     return;
                                 }
                                 Notecard notecard = new Notecard(front, back);
-                                ac.addNotecardToStack(notecard, stackName);
+                                ac.addNotecardToStack(notecard, stackName, 0);
                                 getTargetFragment().onActivityResult(getTargetRequestCode(),
                                         Activity.RESULT_OK, getActivity().getIntent());
                                 dialog.dismiss();

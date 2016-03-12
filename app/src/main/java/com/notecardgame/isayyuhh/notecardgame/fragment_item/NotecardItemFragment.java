@@ -97,7 +97,7 @@ public class NotecardItemFragment extends ItemFragment {
             Notecard newNotecard = new Notecard(this.newFront, this.newBack);
 
             this.ac.removeNotecardFromStack(notecard, this.currentStackName);
-            this.ac.addNotecardToStack(newNotecard, this.currentStackName);
+            this.ac.addNotecardToStack(newNotecard, this.currentStackName, 0);
         }
         this.ac.popFragment();
         return true;

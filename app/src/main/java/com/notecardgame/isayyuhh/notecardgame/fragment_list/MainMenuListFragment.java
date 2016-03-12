@@ -2,13 +2,22 @@ package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.MainMenuListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.object.Note;
+import com.notecardgame.isayyuhh.notecardgame.object.Paper;
+import com.notecardgame.isayyuhh.notecardgame.object.Stack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/2/16.
@@ -18,7 +27,7 @@ public class MainMenuListFragment extends ListFragment {
     /**
      * Fields
      */
-    private String[] mainMenuArray;
+    private List<Paper> mainMenuArray;
 
     /**
      * On created fragment
@@ -28,7 +37,9 @@ public class MainMenuListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.mainMenuArray = this.ac.getStrArr(R.array.menu_main);
+        String[] stringArray = this.ac.getStrArr(R.array.menu_main);
+        this.mainMenuArray = new ArrayList<>();
+        for (String string: stringArray) this.mainMenuArray.add(new Note(string));
     }
 
     /**
@@ -60,7 +71,8 @@ public class MainMenuListFragment extends ListFragment {
         listView.setAdapter(adp);
         adp.setData(this.mainMenuArray);
 
-        listView.setOnItemClickListener(new ListItemClickListener());
+        ListItemClickListener listener = new ListItemClickListener(adp, listView);
+        listView.setOnItemClickListener(listener);
     }
 
     /**
@@ -79,13 +91,21 @@ public class MainMenuListFragment extends ListFragment {
                 this.ac.setListFragment(new StackListFragment());
                 break;
             case 1:
-                Log.e("PASS", mainMenuArray[position]);
+                Log.e("PASS", ((Note) this.mainMenuArray.get(position)).value);
                 break;
             case 2:
-                Log.e("PASS", mainMenuArray[position]);
+                Log.e("PASS", ((Note) this.mainMenuArray.get(position)).value);
                 break;
             default:
                 Log.e("MAIN MENU ERROR", "invalid listview position");
         }
+    }
+
+    @Override
+    protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
+    }
+
+    @Override
+    protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
     }
 }

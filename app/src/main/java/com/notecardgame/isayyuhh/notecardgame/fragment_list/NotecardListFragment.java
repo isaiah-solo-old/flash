@@ -3,6 +3,7 @@ package com.notecardgame.isayyuhh.notecardgame.fragment_list;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,16 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
+import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
+import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/2/16.
@@ -79,11 +87,16 @@ public class NotecardListFragment extends ListFragment {
 
         NotecardListAdapter adp = new NotecardListAdapter(this.getActivity(), this.ac, listView);
         listView.setAdapter(adp);
-        adp.setData(this.stack);
 
-        listView.setOnItemClickListener(new ListItemClickListener());
+        List<Paper> notecards = new ArrayList<>();
+        for (Notecard notecard: this.stack.getNotecards()) notecards.add(notecard);
+        adp.setData(notecards);
+        adp.setStackName(this.stack.getName());
+
+        ListItemClickListener listener = new ListItemClickListener(adp, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(adp);
+        listView.setOnItemClickListener(listener);
+        listView.setMultiChoiceModeListener(listener);
     }
 
     /**
@@ -129,5 +142,19 @@ public class NotecardListFragment extends ListFragment {
             tv.setText(this.stack.at(position).getBack());
             tvHint.setText(this.ac.getStr(R.string.literal_back));
         }
+    }
+
+    @Override
+    protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
+        this.stack.swapNotecards(positionOne, positionTwo);
+        List<Paper> notecards = new ArrayList<>();
+        for (Notecard notecard: this.stack.getNotecards()) notecards.add(notecard);
+        adp.setData(notecards);
+    }
+
+    @Override
+    protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
+        Notecard selecteditem = (Notecard) adp.getItem(selected.keyAt(position));
+        adp.remove(selecteditem);
     }
 }

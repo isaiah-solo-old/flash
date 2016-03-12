@@ -8,30 +8,22 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.object.Note;
+import com.notecardgame.isayyuhh.notecardgame.object.Paper;
+
+import java.util.List;
 
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class MainMenuListAdapter extends ArrayAdapter<String> {
+public class MainMenuListAdapter extends ListAdapter {
 
     /**
      * Adapter constructor
      * @param context Activity context
      */
-    public MainMenuListAdapter(Context context) {
+    public MainMenuListAdapter (Context context) {
         super(context, R.layout.list_item_stack);
-    }
-
-    /**
-     * Sets data to adapter
-     * @param array Array to add to adapter
-     */
-    public void setData(String[] array) {
-        this.clear();
-        for(String string: array) {
-            this.add(string);
-        }
-        this.notifyDataSetChanged();
     }
 
     /**
@@ -48,7 +40,7 @@ public class MainMenuListAdapter extends ArrayAdapter<String> {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item_main, null);
         }
-        String string = this.getItem(position);
+        String string = ((Note) this.getItem(position)).value;
 
         TextView listItem = (TextView) convertView.findViewById(R.id.list_item_main);
         listItem.setText(string);

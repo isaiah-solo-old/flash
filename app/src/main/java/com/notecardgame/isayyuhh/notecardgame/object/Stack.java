@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class Stack {
+public class Stack extends Paper {
 
     /**
      * Fields
@@ -63,6 +63,15 @@ public class Stack {
                 break;
             }
         }
+    }
+
+    /**
+     * Changes notecards' positions
+     * @param positionOne Position of first notecard
+     * @param positionTwo Position of second notecard
+     */
+    public void swapNotecards (int positionOne, int positionTwo) {
+        Collections.swap(this.notecards, positionOne, positionTwo);
     }
 
     /**
