@@ -63,7 +63,7 @@ public class StackListFragment extends ListFragment {
     protected void setListView() {
         ListView listView = (ListView) this.view.findViewById(R.id.lv_stack);
 
-        StackListAdapter adp = new StackListAdapter(getActivity(), ac);
+        StackListAdapter adp = new StackListAdapter(getActivity(), this.ac);
         listView.setAdapter(adp);
         List<Paper> stacks = new ArrayList<>();
         for (Stack stack: this.ac.getStacks()) stacks.add(stack);
@@ -99,15 +99,15 @@ public class StackListFragment extends ListFragment {
      */
     @Override
     protected void onClick(View view, int position) {
-        Stack stack = ac.stacksAt(position);
+        Stack stack = this.ac.stacksAt(position);
 
         Gson gson = new Gson();
         Bundle b = new Bundle();
-        b.putString(ac.getStr(R.string.bundle_json), gson.toJson(stack));
+        b.putString(this.ac.getStr(R.string.bundle_json), gson.toJson(stack));
 
         NotecardListFragment fragment = new NotecardListFragment();
         fragment.setArguments(b);
-        ac.setListFragment(fragment);
+        this.ac.setListFragment(fragment);
     }
 
     @Override

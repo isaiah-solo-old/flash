@@ -67,7 +67,7 @@ public class MainMenuListFragment extends ListFragment {
     protected void setListView() {
         ListView listView = (ListView) this.view.findViewById(R.id.lv_main);
 
-        MainMenuListAdapter adp = new MainMenuListAdapter(this.getActivity());
+        MainMenuListAdapter adp = new MainMenuListAdapter(this.getActivity(), ac);
         listView.setAdapter(adp);
         adp.setData(this.mainMenuArray);
 

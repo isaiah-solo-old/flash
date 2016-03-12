@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.object.Note;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 
@@ -22,8 +23,8 @@ public class MainMenuListAdapter extends ListAdapter {
      * Adapter constructor
      * @param context Activity context
      */
-    public MainMenuListAdapter (Context context) {
-        super(context, R.layout.list_item_stack);
+    public MainMenuListAdapter (Context context, ActivityCallback ac) {
+        super(context, R.layout.list_item_stack, ac);
     }
 
     /**

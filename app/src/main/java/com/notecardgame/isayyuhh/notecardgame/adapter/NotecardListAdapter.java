@@ -32,7 +32,6 @@ public class NotecardListAdapter extends ListAdapter {
     /**
      * Fields
      */
-    private ActivityCallback ac;
     private String stackName;
 
     /**
@@ -41,8 +40,7 @@ public class NotecardListAdapter extends ListAdapter {
      * @param ac Reference to Activity
      */
     public NotecardListAdapter(Context context, ActivityCallback ac, ListView listView) {
-        super(context, R.layout.list_item_stack);
-        this.ac = ac;
+        super(context, R.layout.list_item_stack, ac);
     }
 
     public void setStackName (String stackName) { this.stackName = stackName; }

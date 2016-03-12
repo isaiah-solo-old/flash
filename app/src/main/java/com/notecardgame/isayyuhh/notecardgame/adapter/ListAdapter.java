@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
+import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.object.Note;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 
@@ -19,11 +20,17 @@ import java.util.List;
 public abstract class ListAdapter extends ArrayAdapter<Paper> {
 
     /**
+     * Fields
+     */
+    protected ActivityCallback ac;
+
+    /**
      * Adapter constructor
      * @param context Activity context
      */
-    public ListAdapter(Context context, int res) {
+    public ListAdapter(Context context, int res, ActivityCallback ac) {
         super(context, res);
+        this.ac = ac;
     }
 
     /**

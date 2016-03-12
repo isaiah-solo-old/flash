@@ -26,18 +26,12 @@ import java.util.List;
 public class StackListAdapter extends ListAdapter {
 
     /**
-     * Fields
-     */
-    private ActivityCallback ac;
-
-    /**
      * Adapter constructor
      * @param context Activity context
      * @param ac Reference to Activity
      */
     public StackListAdapter(Context context, ActivityCallback ac) {
-        super(context, R.layout.list_item_stack);
-        this.ac = ac;
+        super(context, R.layout.list_item_stack, ac);
     }
 
     /**
