@@ -69,7 +69,7 @@ public class StackListFragment extends ListFragment {
         for (Stack stack: this.ac.getStacks()) stacks.add(stack);
         adp.setData(stacks);
 
-        ListItemClickListener listener = new ListItemClickListener(adp, listView);
+        ListItemListener listener = new ListItemListener(adp, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setOnItemClickListener(listener);
         listView.setMultiChoiceModeListener(listener);
@@ -110,6 +110,13 @@ public class StackListFragment extends ListFragment {
         this.ac.setListFragment(fragment);
     }
 
+    /**
+     * On multi swap
+     *
+     * @param positionOne Position of first element
+     * @param positionTwo Position of second element
+     * @param adp         Array adapter
+     */
     @Override
     protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
         this.ac.swapStacks(positionOne, positionTwo);
@@ -118,6 +125,13 @@ public class StackListFragment extends ListFragment {
         adp.setData(stacks);
     }
 
+    /**
+     * On multi delete
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
     @Override
     protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
         Stack selecteditem = (Stack) adp.getItem(selected.keyAt(position));

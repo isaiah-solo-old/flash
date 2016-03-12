@@ -58,37 +58,39 @@ public abstract class ListFragment extends Fragment {
 
     /**
      * On multi swap
+     *
      * @param positionOne Position of first element
      * @param positionTwo Position of second element
-     * @param adp Array adapter
+     * @param adp         Array adapter
      */
-    protected abstract void onSwap (int positionOne, int positionTwo, ListAdapter adp);
+    protected abstract void onSwap(int positionOne, int positionTwo, ListAdapter adp);
 
     /**
      * On multi delete
+     *
      * @param selected Array containing selected items
      * @param position Position of element
-     * @param adp Array adapter
+     * @param adp      Array adapter
      */
-    protected abstract void onDelete (SparseBooleanArray selected, int position, ListAdapter adp);
+    protected abstract void onDelete(SparseBooleanArray selected, int position, ListAdapter adp);
 
     /**
      * On item click listener
      */
-    protected class ListItemClickListener implements AdapterView.OnItemClickListener,
+    protected class ListItemListener implements AdapterView.OnItemClickListener,
             AbsListView.MultiChoiceModeListener {
 
         /**
          * Fields
          */
+        private ListAdapter adp;
         private ListView listView;
         private SparseBooleanArray mSelectedItemsIds;
-        private ListAdapter adp;
 
         /**
          * Constructor
          */
-        public ListItemClickListener (ListAdapter adp, ListView listView) {
+        public ListItemListener(ListAdapter adp, ListView listView) {
             this.adp = adp;
             this.listView = listView;
             this.mSelectedItemsIds = new SparseBooleanArray();
@@ -109,10 +111,11 @@ public abstract class ListFragment extends Fragment {
 
         /**
          * On item's state changed
-         * @param mode Action mode
+         *
+         * @param mode     Action mode
          * @param position Position of item
-         * @param id Id of item
-         * @param checked If item is checked
+         * @param id       Id of item
+         * @param checked  If item is checked
          */
         @Override
         public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
@@ -130,6 +133,7 @@ public abstract class ListFragment extends Fragment {
 
         /**
          * On action mode created
+         *
          * @param mode Action mode
          * @param menu Action mode menu
          * @return If action mode is created
@@ -142,6 +146,7 @@ public abstract class ListFragment extends Fragment {
 
         /**
          * On action mode prepared
+         *
          * @param mode Action mode
          * @param menu Action mode menu
          * @return If action mode is prepared
@@ -153,6 +158,7 @@ public abstract class ListFragment extends Fragment {
 
         /**
          * On action mode item clicked
+         *
          * @param mode Action mode
          * @param item Action mode item
          * @return If action mode item clicked
@@ -189,6 +195,7 @@ public abstract class ListFragment extends Fragment {
 
         /**
          * On action mode destroyed
+         *
          * @param mode Action mode
          */
         @Override
@@ -204,10 +211,8 @@ public abstract class ListFragment extends Fragment {
          * @param value    If selection exists
          */
         public void selectView(int position, boolean value) {
-            if (value)
-                this.mSelectedItemsIds.put(position, value);
-            else
-                this.mSelectedItemsIds.delete(position);
+            if (value) this.mSelectedItemsIds.put(position, value);
+            else this.mSelectedItemsIds.delete(position);
             this.adp.notifyDataSetChanged();
         }
     }

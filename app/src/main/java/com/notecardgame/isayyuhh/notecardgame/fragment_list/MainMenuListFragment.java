@@ -11,10 +11,8 @@ import android.widget.ListView;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.MainMenuListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.object.Note;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
-import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class MainMenuListFragment extends ListFragment {
         listView.setAdapter(adp);
         adp.setData(this.mainMenuArray);
 
-        ListItemClickListener listener = new ListItemClickListener(adp, listView);
+        ListItemListener listener = new ListItemListener(adp, listView);
         listView.setOnItemClickListener(listener);
     }
 
@@ -101,10 +99,24 @@ public class MainMenuListFragment extends ListFragment {
         }
     }
 
+    /**
+     * On multi swap
+     *
+     * @param positionOne Position of first element
+     * @param positionTwo Position of second element
+     * @param adp         Array adapter
+     */
     @Override
     protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
     }
 
+    /**
+     * On multi delete
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
     @Override
     protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
     }

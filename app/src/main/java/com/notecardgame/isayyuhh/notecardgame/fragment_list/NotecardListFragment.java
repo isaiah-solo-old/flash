@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.adapter.ListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.adapter.NotecardListAdapter;
-import com.notecardgame.isayyuhh.notecardgame.adapter.StackListAdapter;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddNotecardDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
@@ -93,7 +92,7 @@ public class NotecardListFragment extends ListFragment {
         adp.setData(notecards);
         adp.setStackName(this.stack.getName());
 
-        ListItemClickListener listener = new ListItemClickListener(adp, listView);
+        ListItemListener listener = new ListItemListener(adp, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setOnItemClickListener(listener);
         listView.setMultiChoiceModeListener(listener);
@@ -144,6 +143,13 @@ public class NotecardListFragment extends ListFragment {
         }
     }
 
+    /**
+     * On multi swap
+     *
+     * @param positionOne Position of first element
+     * @param positionTwo Position of second element
+     * @param adp         Array adapter
+     */
     @Override
     protected void onSwap(int positionOne, int positionTwo, ListAdapter adp) {
         this.stack.swapNotecards(positionOne, positionTwo);
@@ -152,6 +158,13 @@ public class NotecardListFragment extends ListFragment {
         adp.setData(notecards);
     }
 
+    /**
+     * On multi delete
+     *
+     * @param selected Array containing selected items
+     * @param position Position of element
+     * @param adp      Array adapter
+     */
     @Override
     protected void onDelete(SparseBooleanArray selected, int position, ListAdapter adp) {
         Notecard selecteditem = (Notecard) adp.getItem(selected.keyAt(position));
