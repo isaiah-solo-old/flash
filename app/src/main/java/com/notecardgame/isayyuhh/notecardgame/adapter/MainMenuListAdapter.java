@@ -4,15 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.object.Note;
-import com.notecardgame.isayyuhh.notecardgame.object.Paper;
-
-import java.util.List;
 
 /**
  * Created by isayyuhh on 2/3/16.
@@ -21,17 +17,19 @@ public class MainMenuListAdapter extends ListAdapter {
 
     /**
      * Adapter constructor
+     *
      * @param context Activity context
      */
-    public MainMenuListAdapter (Context context, ActivityCallback ac) {
+    public MainMenuListAdapter(Context context, ActivityCallback ac) {
         super(context, R.layout.list_item_stack, ac);
     }
 
     /**
      * Sets item view
-     * @param position Reference to position
+     *
+     * @param position    Reference to position
      * @param convertView View to inflate
-     * @param parent Reference to ViewGroup
+     * @param parent      Reference to ViewGroup
      * @return View to inflate
      */
     @Override

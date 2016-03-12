@@ -3,16 +3,9 @@ package com.notecardgame.isayyuhh.notecardgame.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +15,6 @@ import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.fragment_item.NotecardItemFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
-import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
 /**
  * Created by isayyuhh on 2/3/16.
@@ -36,20 +28,24 @@ public class NotecardListAdapter extends ListAdapter {
 
     /**
      * Adapter constructor
+     *
      * @param context Activity context
-     * @param ac Reference to Activity
+     * @param ac      Reference to Activity
      */
     public NotecardListAdapter(Context context, ActivityCallback ac, ListView listView) {
         super(context, R.layout.list_item_stack, ac);
     }
 
-    public void setStackName (String stackName) { this.stackName = stackName; }
+    public void setStackName(String stackName) {
+        this.stackName = stackName;
+    }
 
     /**
      * Sets item view
-     * @param position Reference to position
+     *
+     * @param position    Reference to position
      * @param convertView View to inflate
-     * @param parent Reference to ViewGroup
+     * @param parent      Reference to ViewGroup
      * @return View to inflate
      */
     @Override
@@ -77,6 +73,7 @@ public class NotecardListAdapter extends ListAdapter {
 
     /**
      * Removes notecard from stack and listview
+     *
      * @param notecard Notecard to remove from stack and listview
      */
     @Override
@@ -98,6 +95,7 @@ public class NotecardListAdapter extends ListAdapter {
 
         /**
          * On-click listener constructor
+         *
          * @param notecardFront String on front of notecard
          */
         public IconClickListener(String notecardFront) {
@@ -106,6 +104,7 @@ public class NotecardListAdapter extends ListAdapter {
 
         /**
          * Uses logic on on-item click
+         *
          * @param v View
          */
         @Override
