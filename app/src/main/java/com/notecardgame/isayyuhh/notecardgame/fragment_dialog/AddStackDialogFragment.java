@@ -19,6 +19,7 @@ public class AddStackDialogFragment extends AddDialogFragment {
 
     /**
      * On created dialog
+     *
      * @param savedInstanceState Reference to the saved instance state
      * @return Created dialog
      */
@@ -30,37 +31,36 @@ public class AddStackDialogFragment extends AddDialogFragment {
                 .setPositiveButton(this.ac.getStr(R.string.dialog_positive),
                         new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        EditText et = (EditText) getDialog().findViewById(R.id.edit_stack_name);
-                        String text = et.getText().toString();
-                        if (text.trim().length() < 1) {
-                            Toast.makeText(getActivity(),
-                                    ac.getStr(R.string.dialog_error_missingname),
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else if (ac.findStack(text) != null) {
-                            Toast.makeText(getActivity(),
-                                    ac.getStr(R.string.dialog_error_existstack),
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Stack stack = new Stack(text);
-                        ac.addStack(stack);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(),
-                                Activity.RESULT_OK, getActivity().getIntent());
-                        dialog.dismiss();
-                    }
-                })
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                EditText et = (EditText) getDialog().findViewById(R.id.edit_stack_name);
+                                String text = et.getText().toString();
+                                if (text.trim().length() < 1) {
+                                    Toast.makeText(getActivity(),
+                                            ac.getStr(R.string.dialog_error_missingname),
+                                            Toast.LENGTH_SHORT).show();
+                                    return;
+                                } else if (ac.findStack(text) != null) {
+                                    Toast.makeText(getActivity(),
+                                            ac.getStr(R.string.dialog_error_existstack),
+                                            Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                Stack stack = new Stack(text);
+                                ac.addStack(stack);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(),
+                                        Activity.RESULT_OK, getActivity().getIntent());
+                                dialog.dismiss();
+                            }
+                        })
                 .setNegativeButton(this.ac.getStr(R.string.dialog_negative),
                         new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
         return builder.create();
     }
 }
