@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 import com.google.gson.Gson;
 import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
@@ -45,10 +43,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * On created activity
+     *
      * @param savedInstanceState Reference to the saved instance state
      */
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         String newline = getResources().getString(R.string.literal_newline);
         try {
             FileOutputStream fos = this.openFileOutput(filename, Context.MODE_PRIVATE);
-            for (Stack stack: this.stacks) {
+            for (Stack stack : this.stacks) {
                 fos.write(stack.getJson().getBytes());
                 fos.write(newline.getBytes());
             }
@@ -117,13 +116,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Sets new fragment
+     *
      * @param fragment Fragment to transition to
      */
     @Override
     public void setListFragment(ListFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         ft.replace(R.id.fragment, fragment);
-        if (! this.init) ft.addToBackStack(null);
+        if (!this.init) ft.addToBackStack(null);
         else this.init = false;
         ft.commit();
     }
@@ -132,13 +132,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
     public void setItemFragment(ItemFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         ft.replace(R.id.fragment, fragment);
-        if (! this.init) ft.addToBackStack(null);
+        if (!this.init) ft.addToBackStack(null);
         else this.init = false;
         ft.commit();
     }
 
     /**
      * Sets new dialog fragment
+     *
      * @param fragment Dialog fragment to transition to
      */
     @Override
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Sets toolbar title to desired string
+     *
      * @param title String to set title to
      */
     @Override
@@ -174,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Gets string from resources
+     *
      * @param id Resource id
      * @return String from resources
      */
@@ -184,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Gets string array from resources
+     *
      * @param id Resource id
      * @return String array from resources
      */
@@ -194,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Gets color from resources
+     *
      * @param id Resource id
      * @return
      */
@@ -204,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Adds stack to internal storage file
+     *
      * @param stack Stack to add
      */
     @Override
@@ -214,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Deletes stack from internal storage file
+     *
      * @param name Name of stack to delete
      */
     @Override
@@ -233,13 +240,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Searches for stack in reference of stacks
+     *
      * @param name Name of stack to search for
      * @return Stack found
      */
     @Override
     public Stack findStack(String name) {
         Stack foundStack = null;
-        for (Stack stack: this.stacks) {
+        for (Stack stack : this.stacks) {
             if (name.compareTo(stack.getName()) == 0) {
                 foundStack = stack;
                 break;
@@ -250,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Searches for stack at given position
+     *
      * @param position Position of stack in reference of stacks
      * @return Stack found
      */
@@ -260,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Gives a reference to the stacks
+     *
      * @return An immutable reference to the stacks
      */
     @Override
@@ -278,8 +288,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Adds notecard to given stack
+     *
      * @param notecard Notecard to add to stack
-     * @param name Name of stack to add to
+     * @param name     Name of stack to add to
      */
     @Override
     public void addNotecardToStack(Notecard notecard, String name, int position) {
@@ -291,8 +302,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Deletes notecard from given stack
+     *
      * @param notecard Notecard to delete from stack
-     * @param name Name of stack to delete from
+     * @param name     Name of stack to delete from
      */
     @Override
     public void removeNotecardFromStack(Notecard notecard, String name) {
@@ -304,14 +316,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
     /**
      * Find notecard given stack name and front of notecard
-     * @param stackName Name of stack
+     *
+     * @param stackName     Name of stack
      * @param notecardFront Front of notecard
      * @return
      */
     @Override
     public Notecard findNotecardInStack(String stackName, String notecardFront) {
         Notecard foundNotecard = null;
-        for (Stack stack: this.stacks) {
+        for (Stack stack : this.stacks) {
             if (stackName.compareTo(stack.getName()) == 0) {
                 foundNotecard = stack.find(notecardFront);
                 break;
