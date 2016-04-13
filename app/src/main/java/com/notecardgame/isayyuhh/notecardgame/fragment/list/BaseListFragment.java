@@ -1,6 +1,5 @@
 package com.notecardgame.isayyuhh.notecardgame.fragment.list;
 
-import android.app.Activity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -12,10 +11,7 @@ import android.widget.ListView;
 
 import com.notecardgame.isayyuhh.notecardgame.fragment.BaseFragment;
 import com.notecardgame.isayyuhh.notecardgame.R;
-import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
 import com.notecardgame.isayyuhh.notecardgame.adapter.BaseListAdapter;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by isayyuhh on 2/2/16.
@@ -26,19 +22,7 @@ public abstract class BaseListFragment extends BaseFragment {
      * Fields
      */
     protected final static int MY_REQUEST_CODE = 1;
-    protected ActivityCallback ac;
     protected View view;
-
-    /**
-     * On attach fragment to activity
-     *
-     * @param activity Activity to attach to
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.ac = (ActivityCallback) activity;
-    }
 
     /**
      * Sets on-click listener and adapter to list view
@@ -53,7 +37,7 @@ public abstract class BaseListFragment extends BaseFragment {
     /**
      * On item click
      */
-    protected abstract void onClick(View view, int position) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, java.lang.InstantiationException;
+    protected abstract void onClick(View view, int position);
 
     /**
      * On multi edit
