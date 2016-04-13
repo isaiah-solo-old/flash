@@ -11,10 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
-import com.notecardgame.isayyuhh.notecardgame.fragment_item.ItemFragment;
-import com.notecardgame.isayyuhh.notecardgame.fragment_list.ListFragment;
-import com.notecardgame.isayyuhh.notecardgame.fragment_list.MainMenuListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.BaseFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.BaseDialogFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.list.MainMenuListFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 import com.notecardgame.isayyuhh.notecardgame.R;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
         this.fm = getSupportFragmentManager();
         MainMenuListFragment fragment = new MainMenuListFragment();
-        this.setListFragment(fragment);
+        this.setFragment(fragment);
     }
 
     /**
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
             }
             fos.close();
         } catch (IOException ioe) {
-            Log.e("FAIL", "File output failed");
+            Log.e(this.getStr(R.string.log_error_fail), this.getStr(R.string.file_error_output));
             return;
         }
     }
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
             }
             br.close();
         } catch (IOException ioe) {
-            Log.e("FAIL", "File input failed");
+            Log.e(this.getStr(R.string.log_error_fail), this.getStr(R.string.file_error_input));
             return;
         }
     }
@@ -120,16 +119,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param fragment Fragment to transition to
      */
     @Override
-    public void setListFragment(ListFragment fragment) {
-        FragmentTransaction ft = this.fm.beginTransaction();
-        ft.replace(R.id.fragment, fragment);
-        if (!this.init) ft.addToBackStack(null);
-        else this.init = false;
-        ft.commit();
-    }
-
-    @Override
-    public void setItemFragment(ItemFragment fragment) {
+    public void setFragment(BaseFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         ft.replace(R.id.fragment, fragment);
         if (!this.init) ft.addToBackStack(null);
@@ -143,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
      * @param fragment Dialog fragment to transition to
      */
     @Override
-    public void setDialogFragment(AddDialogFragment fragment) {
+    public void setDialogFragment(BaseDialogFragment fragment) {
         FragmentTransaction ft = this.fm.beginTransaction();
         Fragment prev = this.fm.findFragmentByTag(this.getStr(R.string.tag_dialog));
         if (prev != null) ft.remove(prev);
@@ -169,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
         this.mToolbar.setTitle(title);
     }
 
+    /**
+     * Updates toolbar menu
+     */
     @Override
     public void updateMenu() {
         this.invalidateOptionsMenu();

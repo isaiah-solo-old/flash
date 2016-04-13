@@ -14,7 +14,7 @@ import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class StackListAdapter extends ListAdapter {
+public class StackListAdapter extends BaseListAdapter {
 
     /**
      * Adapter constructor

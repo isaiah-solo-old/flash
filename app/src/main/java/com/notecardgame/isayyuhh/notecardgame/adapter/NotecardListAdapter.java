@@ -1,25 +1,22 @@
 package com.notecardgame.isayyuhh.notecardgame.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.notecardgame.isayyuhh.notecardgame.R;
 import com.notecardgame.isayyuhh.notecardgame.activity.ActivityCallback;
-import com.notecardgame.isayyuhh.notecardgame.fragment_item.NotecardItemFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Paper;
 
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class NotecardListAdapter extends ListAdapter {
+public class NotecardListAdapter extends BaseListAdapter {
 
     /**
      * Fields

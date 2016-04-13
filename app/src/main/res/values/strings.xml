@@ -27,6 +27,13 @@
     <string name="dialog_fronthint">Front</string>
     <string name="dialog_backhint">Back (Optional)</string>
 
+    <!-- Log Flags -->
+    <string name="log_error_fail">FAIL</string>
+
+    <!-- File Error Messages -->
+    <string name="file_error_input">"File input failed"</string>
+    <string name="file_error_output">"File output failed"</string>
+
     <!-- Dialog Error Messages -->
     <string name="dialog_error_missingname">Enter stack name</string>
     <string name="dialog_error_missingfront">Please enter front of notecard</string>

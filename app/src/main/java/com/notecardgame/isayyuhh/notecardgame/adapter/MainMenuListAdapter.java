@@ -13,7 +13,7 @@ import com.notecardgame.isayyuhh.notecardgame.object.Note;
 /**
  * Created by isayyuhh on 2/3/16.
  */
-public class MainMenuListAdapter extends ListAdapter {
+public class MainMenuListAdapter extends BaseListAdapter {
 
     /**
      * Adapter constructor

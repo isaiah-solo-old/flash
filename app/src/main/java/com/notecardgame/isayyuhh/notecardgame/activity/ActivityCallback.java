@@ -1,8 +1,7 @@
 package com.notecardgame.isayyuhh.notecardgame.activity;
 
-import com.notecardgame.isayyuhh.notecardgame.fragment_dialog.AddDialogFragment;
-import com.notecardgame.isayyuhh.notecardgame.fragment_item.ItemFragment;
-import com.notecardgame.isayyuhh.notecardgame.fragment_list.ListFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.BaseFragment;
+import com.notecardgame.isayyuhh.notecardgame.fragment.dialog.BaseDialogFragment;
 import com.notecardgame.isayyuhh.notecardgame.object.Notecard;
 import com.notecardgame.isayyuhh.notecardgame.object.Stack;
 
@@ -18,21 +17,14 @@ public interface ActivityCallback {
      *
      * @param fragment Fragment to transition to
      */
-    void setListFragment(ListFragment fragment);
-
-    /**
-     * Sets new fragment
-     *
-     * @param fragment Fragment to transition to
-     */
-    void setItemFragment(ItemFragment fragment);
+    void setFragment(BaseFragment fragment);
 
     /**
      * Sets new dialog fragment
      *
      * @param fragment Dialog fragment to transition to
      */
-    void setDialogFragment(AddDialogFragment fragment);
+    void setDialogFragment(BaseDialogFragment fragment);
 
     /**
      * Pop fragment
